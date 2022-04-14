@@ -1,0 +1,11 @@
+# docker-compose -p gamesland-api up --build
+version: "3.3"
+services:
+  persistence:
+    image: postgres:14.2-alpine
+    environment:
+      POSTGRES_DB: gamesland
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
