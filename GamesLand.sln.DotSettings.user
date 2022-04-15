@@ -1,0 +1,12 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bb93dbb9_002D19d7_002D4ef0_002D884c_002D70b750b3beb8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Hashes_Password_Matches" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C::net6.0::GamesLand.Tests.Integration.PostgreSQL.Services.UserPasswordServiceTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C::net6.0::GamesLand.Tests.Integration.PostgreSQL.Users.UsersRepositoryTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Create_User&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UserPasswordServiceTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Create_User_If_Not_Exists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Create_User_If_Email_Not_Exists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Not_Create_A_User_If_Email_Exists&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

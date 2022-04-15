@@ -1,0 +1,3 @@
+{
+  "pgConnection": "Host=localhost;User ID=postgres;Password=postgres;Port=5431;Include Error Detail=true;Database=gamesland-test;"
+}

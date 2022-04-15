@@ -6,7 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 var services = builder.Services;
 
-configuration.AddJsonFile("./config.json", false);
+configuration.AddJsonFile("./config.json", true);
+configuration.AddJsonFile($"./config.{builder.Environment.EnvironmentName}.json", true);
 services.AddServices(builder.Configuration);
 
 var app = builder.Build();
@@ -19,3 +20,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program
+{
+}

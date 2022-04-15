@@ -14,8 +14,15 @@
     </ItemGroup>
 
     <ItemGroup>
+        <InternalsVisibleTo Include="..\GamesLand.Tests.Helpers\GamesLand.Tests.Helpers.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
         <Content Update="config.json">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Update="config.test.json">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
 

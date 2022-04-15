@@ -6,6 +6,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesLand.Core", "GamesLand
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesLand.Infrastructure.PostgreSQL", "GamesLand.Infrastructure.PostgreSQL\GamesLand.Infrastructure.PostgreSQL.csproj", "{0BFDFA90-3589-41A3-94CE-C9105953F09A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesLand.Tests.Unit", "GamesLand.Tests.Unit\GamesLand.Tests.Unit.csproj", "{E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesLand.Tests.Integration", "GamesLand.Tests.Integration\GamesLand.Tests.Integration.csproj", "{70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamesLand.Tests.Helpers", "GamesLand.Tests.Helpers\GamesLand.Tests.Helpers.csproj", "{89723FFC-BA63-4576-B790-7E2C6214B550}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +30,17 @@ Global
 		{0BFDFA90-3589-41A3-94CE-C9105953F09A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0BFDFA90-3589-41A3-94CE-C9105953F09A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0BFDFA90-3589-41A3-94CE-C9105953F09A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89723FFC-BA63-4576-B790-7E2C6214B550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89723FFC-BA63-4576-B790-7E2C6214B550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89723FFC-BA63-4576-B790-7E2C6214B550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89723FFC-BA63-4576-B790-7E2C6214B550}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

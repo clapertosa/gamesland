@@ -1,4 +1,4 @@
-# docker-compose -p gamesland-api up --build
+﻿# docker-compose -p gamesland-api-test up --build
 version: "3.3"
 services:
   persistence:
@@ -8,4 +8,4 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5431:5432"
