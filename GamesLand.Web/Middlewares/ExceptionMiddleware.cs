@@ -36,7 +36,7 @@ public class ExceptionMiddleware
         {
             case RestException re:
             {
-                logger.LogError("Rest Error");
+                logger.LogError($"Rest Error");
                 errors = re.Errors;
                 context.Response.StatusCode = (int)re.StatusCode;
             }

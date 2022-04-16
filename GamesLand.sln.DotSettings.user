@@ -8,5 +8,11 @@
     &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Create_User_If_Not_Exists&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Create_User_If_Email_Not_Exists&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Not_Create_A_User_If_Email_Exists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Get_User_By_Id_If_Exists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Get_User_By_Id_If_Not_Exists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Update_User_If_Exists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Update_User_If_Not_Exists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Delete_User_If_Exists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Delete_User_If_Not_Exists&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

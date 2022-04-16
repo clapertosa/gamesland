@@ -21,4 +21,11 @@ public class UsersController : BaseController
         User newUser = await _usersService.CreateUserAsync(user.ToUser());
         return Ok(UserResponse.FromUser(newUser));
     }
+
+    [HttpGet("{Guid id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        User? user = await _usersService.GetUserById(id);
+        return Ok(UserResponse.FromUser(user));
+    }
 }

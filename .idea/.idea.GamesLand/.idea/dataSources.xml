@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/gamesland</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="gamesland-test@localhost" uuid="a23e5f7e-541b-4aca-8def-cf6bce56ac08">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5431/gamesland-test</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

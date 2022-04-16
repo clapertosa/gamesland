@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using GamesLand.Core.Errors;
 using GamesLand.Core.Users;
 using GamesLand.Core.Users.Repositories;
 
@@ -9,8 +12,9 @@ namespace GamesLand.Tests.Unit.Users.Repositories;
 public class FakeUsersRepository : IUsersRepository
 {
     public static string RegisteredEmail => "registered@registered.com";
+    public static Guid RegisteredId => Guid.Parse("a2ffb9ab-81ef-4713-a572-1185487d0b3d");
 
-    private User? GetUser(User entity)
+    private User GetUser(User entity)
     {
         return new User()
         {
@@ -29,24 +33,32 @@ public class FakeUsersRepository : IUsersRepository
         return Task.FromResult(GetUser(entity))!;
     }
 
-    public async Task<User> GetByIdAsync(Guid id)
+    public Task<User?> GetByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return id == RegisteredId ? Task.FromResult(GetUser(new User())) : Task.FromResult((User?)null);
     }
 
-    public async Task<IEnumerable<User>> GetAllAsync()
+    public async Task<IEnumerable<User>> GetAllAsync(int page, int pageSize)
     {
-        throw new NotImplementedException();
+        IEnumerable<Task<User>> users = new List<Task<User>>();
+        for (int i = 0; i < pageSize; i++)
+        {
+            users.Append(Task.FromResult(GetUser(new User())));
+        }
+
+        return await Task.WhenAll(users);
     }
 
-    public async Task<User> UpdateAsync(Guid id, User entity)
+    public Task<User> UpdateAsync(Guid id, User entity)
     {
-        throw new NotImplementedException();
+        return id == RegisteredId ? Task.FromResult(GetUser(entity)) : Task.FromResult((User?)null);
     }
 
-    public async Task DeleteAsync(Guid id)
+    public Task DeleteAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return id == RegisteredId
+            ? Task.CompletedTask
+            : Task.FromException(new RestException(HttpStatusCode.NotFound, new { Message = "User not found." }));
     }
 
     public Task<User?> GetByEmailAsync(string email)
@@ -56,6 +68,15 @@ public class FakeUsersRepository : IUsersRepository
 
     public Task<User> CreateAsync(User entity, string hashedPassword)
     {
-        return Task.FromResult(GetUser(entity));
+        return Task.FromResult(GetUser(new User()
+        {
+            Id = Guid.NewGuid(),
+            Email = entity.Email,
+            Password = hashedPassword,
+            FirstName = entity.FirstName,
+            LastName = entity.LastName,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        }));
     }
 }
