@@ -14,7 +14,7 @@ var app = builder.Build();
 using var scope = app.Services.CreateScope();
 // Run Migrations
 var migrationRunner = scope.ServiceProvider.GetService<IMigrationRunner>();
-migrationRunner.MigrateUp();
+migrationRunner?.MigrateUp();
 
 app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();

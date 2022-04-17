@@ -1,8 +1,14 @@
-﻿namespace GamesLand.Tests.Helpers;
+﻿using Xunit;
 
-public class TestBase : IntegrationTestHelper, IDisposable
+namespace GamesLand.Tests.Helpers;
+
+public class IntegrationTestBase : IntegrationTestHelper, IAsyncLifetime
 {
-    public async void Dispose()
+    public async Task InitializeAsync()
+    {
+    }
+
+    async Task IAsyncLifetime.DisposeAsync()
     {
         Client.Dispose();
         await DropTables();

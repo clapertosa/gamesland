@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using GamesLand.Core.Users;
 using GamesLand.Core.Users.Repositories;
 using GamesLand.Infrastructure.PostgreSQL.Users;
-using GamesLand.Tests.Helpers.PostgreSQL;
+using GamesLand.Tests.Helpers;
 using Xunit;
 
 namespace GamesLand.Tests.Integration.PostgreSQL.Users;
 
-public class UsersRepositoryTests : PostgreSqlHelper, IDisposable
+public class UsersRepositoryTests : IntegrationTestBase
 {
     private readonly IUsersRepository _usersRepository;
 
@@ -109,12 +109,7 @@ public class UsersRepositoryTests : PostgreSqlHelper, IDisposable
         User user = await _usersRepository.CreateAsync(new User() { Email = "email@email.com", Password = "password" });
         await _usersRepository.DeleteAsync(user.Id);
         IEnumerable<User> users = await _usersRepository.GetAllAsync();
-        
-        Assert.Empty(users);
-    }
 
-    public new async void Dispose()
-    {
-        await DropTables();
+        Assert.Empty(users);
     }
 }

@@ -19,7 +19,7 @@ public class UsersController : BaseController
     public async Task<IActionResult> SignUp(CreateUserRequest user)
     {
         User newUser = await _usersService.CreateUserAsync(user.ToUser());
-        return Ok(UserResponse.FromUser(newUser));
+        return CreatedAtAction(nameof(SignUp), UserResponse.FromUser(newUser));
     }
 
     [HttpGet("{Guid id}")]
