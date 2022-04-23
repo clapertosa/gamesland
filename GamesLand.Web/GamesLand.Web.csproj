@@ -8,12 +8,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\GamesLand.Core\GamesLand.Core.csproj"/>
-        <ProjectReference Include="..\GamesLand.Infrastructure.PostgreSQL\GamesLand.Infrastructure.PostgreSQL.csproj"/>
+        <ProjectReference Include="..\GamesLand.Core\GamesLand.Core.csproj" />
+        <ProjectReference Include="..\GamesLand.Infrastructure.PostgreSQL\GamesLand.Infrastructure.PostgreSQL.csproj" />
+        <ProjectReference Include="..\GamesLand.Infrastructure.RAWG\GamesLand.Infrastructure.RAWG.csproj" />
     </ItemGroup>
     
     <ItemGroup>
-        <InternalsVisibleTo Include="..\GamesLand.Tests.Helpers\GamesLand.Tests.Helpers.csproj"/>
+        <InternalsVisibleTo Include="..\GamesLand.Tests.Helpers\GamesLand.Tests.Helpers.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -26,7 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0"/>
+        <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />
     </ItemGroup>
 
 </Project>

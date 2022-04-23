@@ -18,5 +18,12 @@
     &lt;TestId&gt;xUnit::26ECD673-8E8D-47CC-80D7-9D8284B1FD49::net6.0::GamesLand.Tests.E2E.Users.Controllers.UsersController.Sign_Up_User_With_A_Not_Valid_Email&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::26ECD673-8E8D-47CC-80D7-9D8284B1FD49::net6.0::GamesLand.Tests.E2E.Users.Controllers.UsersController&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::26ECD673-8E8D-47CC-80D7-9D8284B1FD49::net6.0::GamesLand.Tests.E2E.Users.Controllers.UsersControllerTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Games.Services.GamesServiceTests.Create_Game_With_Valid_Data&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Games.Services.GamesServiceTests.Get_Game_By_Id_If_Exists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Games.Services.GamesServiceTests.Get_Game_By_Id_If_Not_Exists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Games.Services.GamesServiceTests.Create_Game_That_Already_Exists&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Games.Services.GamesServiceTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C::net6.0::GamesLand.Tests.Integration.PostgreSQL.Games.GamesRepositoryTests.Create_Game_With_Valid_Data&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C::net6.0::GamesLand.Tests.Integration.PostgreSQL.Games.GamesRepositoryTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

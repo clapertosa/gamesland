@@ -13,7 +13,7 @@ public class CreateUserstable : Migration {
             .WithColumn("email").AsString().Unique().NotNullable()
             .WithColumn("password").AsString().NotNullable()
             .WithColumn("created_at").AsDateTime2().WithDefault(SystemMethods.CurrentUTCDateTime)
-            .WithColumn("updated_at").AsDateTime2().WithDefault(SystemMethods.CurrentUTCDateTime);;
+            .WithColumn("updated_at").AsDateTime2().WithDefault(SystemMethods.CurrentUTCDateTime);
     }
 
     public override void Down()

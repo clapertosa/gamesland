@@ -1,6 +1,6 @@
 ﻿using System.Data;
 using Dapper;
-using GamesLand.Core.Users;
+using GamesLand.Core.Users.Entities;
 using GamesLand.Core.Users.Repositories;
 
 namespace GamesLand.Infrastructure.PostgreSQL.Users;
@@ -60,7 +60,7 @@ public class UsersRepository : IUsersRepository
     public async Task<User> UpdateAsync(Guid id, User entity)
     {
         const string query =
-            "UPDATE users SET first_name = @FirstName, last_name = @LastName, updated_at = @UpdatedAt WHERE id = @Id RETURNING id, first_name, last_name, email, created_at, updated_at";
+            "UPDATE users SET first_name = @FirstName, last_name = @LastName, updated_at = current_timestamp WHERE id = @Id RETURNING id, first_name, last_name, email, created_at, updated_at";
         UserPersistent user = await _connection.QueryFirstOrDefaultAsync<UserPersistent>(query,
             new { Id = id, FirstName = entity.FirstName, LastName = entity.LastName, UpdatedAt = DateTime.UtcNow });
         return user.ToUser();

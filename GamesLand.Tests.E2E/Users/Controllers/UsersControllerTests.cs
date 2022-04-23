@@ -2,6 +2,7 @@
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using GamesLand.Core.Users;
+using GamesLand.Core.Users.Entities;
 using GamesLand.Tests.Helpers;
 using GamesLand.Web.Users.Responses;
 using Xunit;

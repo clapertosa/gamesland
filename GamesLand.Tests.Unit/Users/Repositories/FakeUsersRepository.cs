@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using GamesLand.Core.Errors;
-using GamesLand.Core.Users;
+using GamesLand.Core.Users.Entities;
 using GamesLand.Core.Users.Repositories;
 
 namespace GamesLand.Tests.Unit.Users.Repositories;
@@ -35,7 +35,9 @@ public class FakeUsersRepository : IUsersRepository
 
     public Task<User?> GetByIdAsync(Guid id)
     {
-        return id == RegisteredId ? Task.FromResult(GetUser(new User())) : Task.FromResult((User?)null);
+        return id == RegisteredId
+            ? Task.FromResult<User?>(GetUser(new User() { Id = RegisteredId }))
+            : Task.FromResult<User?>(null);
     }
 
     public async Task<IEnumerable<User>> GetAllAsync(int page, int pageSize)
@@ -51,7 +53,7 @@ public class FakeUsersRepository : IUsersRepository
 
     public Task<User> UpdateAsync(Guid id, User entity)
     {
-        return id == RegisteredId ? Task.FromResult(GetUser(entity)) : Task.FromResult((User?)null);
+        return id == RegisteredId ? Task.FromResult(GetUser(entity)) : Task.FromResult<User>(null);
     }
 
     public Task DeleteAsync(Guid id)
@@ -63,7 +65,7 @@ public class FakeUsersRepository : IUsersRepository
 
     public Task<User?> GetByEmailAsync(string email)
     {
-        return email == RegisteredEmail ? Task.FromResult(GetUser(new User())) : Task.FromResult((User?)null);
+        return email == RegisteredEmail ? Task.FromResult<User?>(GetUser(new User() {Email = RegisteredEmail})) : Task.FromResult((User?)null);
     }
 
     public Task<User> CreateAsync(User entity, string hashedPassword)

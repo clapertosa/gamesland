@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using GamesLand.Core.Errors;
 using GamesLand.Core.Users;
+using GamesLand.Core.Users.Entities;
 using GamesLand.Core.Users.Repositories;
 using GamesLand.Core.Users.Services;
 using GamesLand.Infrastructure.PostgreSQL.Services;
@@ -51,7 +52,7 @@ public class UsersServiceTests
     [Fact]
     public async Task Get_User_By_Id_If_Exists()
     {
-        User? user = await _usersService.GetUserById(FakeUsersRepository.RegisteredId);
+        User? user = await _usersService.GetUserByIdAsync(FakeUsersRepository.RegisteredId);
 
         Assert.NotNull(user);
     }
@@ -60,7 +61,7 @@ public class UsersServiceTests
     public async Task Get_User_By_Id_If_Not_Exists()
     {
         RestException exception =
-            await Assert.ThrowsAsync<RestException>(() => _usersService.GetUserById(Guid.NewGuid()));
+            await Assert.ThrowsAsync<RestException>(() => _usersService.GetUserByIdAsync(Guid.NewGuid()));
 
         Assert.Equal(HttpStatusCode.NotFound, exception.StatusCode);
     }
@@ -75,7 +76,7 @@ public class UsersServiceTests
             LastName = "last_name",
             Password = "password"
         };
-        User userRecord = await _usersService.UpdateUser(FakeUsersRepository.RegisteredId, user);
+        User userRecord = await _usersService.UpdateUserAsync(FakeUsersRepository.RegisteredId, user);
 
         Assert.Equal(user.Email, userRecord.Email);
         Assert.Equal(user.FirstName, userRecord.FirstName);
@@ -86,7 +87,7 @@ public class UsersServiceTests
     public async Task Update_User_If_Not_Exists()
     {
         RestException exception =
-            await Assert.ThrowsAsync<RestException>(() => _usersService.UpdateUser(Guid.NewGuid(), new User()));
+            await Assert.ThrowsAsync<RestException>(() => _usersService.UpdateUserAsync(Guid.NewGuid(), new User()));
 
         Assert.Equal(HttpStatusCode.NotFound, exception.StatusCode);
     }
@@ -96,7 +97,7 @@ public class UsersServiceTests
     {
         try
         {
-            await _usersService.DeleteUser(FakeUsersRepository.RegisteredId);
+            await _usersService.DeleteUserAsync(FakeUsersRepository.RegisteredId);
             Assert.True(true);
         }
         catch (Exception e)
@@ -109,7 +110,7 @@ public class UsersServiceTests
     public async Task Delete_User_If_Not_Exists()
     {
         RestException exception =
-            await Assert.ThrowsAsync<RestException>(() => _usersService.DeleteUser(Guid.NewGuid()));
+            await Assert.ThrowsAsync<RestException>(() => _usersService.DeleteUserAsync(Guid.NewGuid()));
 
         Assert.Equal(HttpStatusCode.NotFound, exception.StatusCode);
     }

@@ -1,8 +1,6 @@
 ﻿using System.Data;
 using Dapper;
 using FluentMigrator.Runner;
-using GamesLand.Core;
-using GamesLand.Core.Users;
 using GamesLand.Core.Users.Repositories;
 using GamesLand.Core.Users.Services;
 using GamesLand.Infrastructure.PostgreSQL.Migrations;

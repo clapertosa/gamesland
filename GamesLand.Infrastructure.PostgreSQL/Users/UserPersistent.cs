@@ -1,5 +1,5 @@
 ﻿using GamesLand.Core;
-using GamesLand.Core.Users;
+using GamesLand.Core.Users.Entities;
 
 namespace GamesLand.Infrastructure.PostgreSQL.Users;
 
@@ -10,9 +10,8 @@ internal record UserPersistent : BaseEntity<Guid>
     public string Email { get; set; }
     public string Password { get; set; }
 
-    public User ToUser()
-    {
-        return new User()
+    public User ToUser() =>
+        new User()
         {
             Id = Id,
             FirstName = FirstName,
@@ -22,5 +21,4 @@ internal record UserPersistent : BaseEntity<Guid>
             CreatedAt = CreatedAt,
             UpdatedAt = UpdatedAt
         };
-    }
 }

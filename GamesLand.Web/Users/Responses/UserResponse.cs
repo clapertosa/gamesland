@@ -1,5 +1,6 @@
 ﻿using GamesLand.Core;
 using GamesLand.Core.Users;
+using GamesLand.Core.Users.Entities;
 
 namespace GamesLand.Web.Users.Responses;
 

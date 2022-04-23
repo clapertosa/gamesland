@@ -1,4 +1,6 @@
-﻿namespace GamesLand.Core.Users.Repositories;
+﻿using GamesLand.Core.Users.Entities;
+
+namespace GamesLand.Core.Users.Repositories;
 
 public interface IUsersRepository : IRepository<Guid, User>
 {
