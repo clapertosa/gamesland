@@ -8,14 +8,14 @@ public class Alter_UserGame_Table_Add_Preferred_Platform_And_Email : Migration {
     public override void Up()
     {
         Alter.Table("user_game")
-            .AddColumn("platform").AsInt32().NotNullable()
+            .AddColumn("platform_id").AsGuid().NotNullable().ForeignKey("platforms", "id").OnDelete(Rule.Cascade)
             .AddColumn("notified").AsBoolean().NotNullable().WithDefaultValue(false);
     }
 
     public override void Down()
     {
         Delete
-            .Column("platform")
+            .Column("platform_id")
             .Column("notified")
             .FromTable("user_game");
     }

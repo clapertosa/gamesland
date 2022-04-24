@@ -1,3 +1,6 @@
 {
-  "pgConnection": "Host=localhost;User ID=postgres;Password=postgres;Port=5432;Include Error Detail=true;Database=gamesland;"
+  "pgConnection": "Host=localhost;User ID=postgres;Password=postgres;Port=5432;Include Error Detail=true;Database=gamesland;",
+  "JWT": {
+    "secret": "aisojd89203rj289p3fhj2389"
+  }
 }

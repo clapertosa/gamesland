@@ -17,6 +17,8 @@ var migrationRunner = scope.ServiceProvider.GetService<IMigrationRunner>();
 migrationRunner?.MigrateUp();
 
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();

@@ -22,7 +22,6 @@ public class FakeGamesRepository : IGamesRepository
             ExternalId = entity.ExternalId,
             Name = entity.Name,
             NameOriginal = entity.NameOriginal,
-            Slug = entity.Slug,
             Description = entity.Description,
             Rating = entity.Rating,
             Released = entity.Released,
@@ -72,10 +71,20 @@ public class FakeGamesRepository : IGamesRepository
             : Task.FromException(new RestException(HttpStatusCode.NotFound, new { Message = "Game not found." }));
     }
 
-    public Task<Game?> GetByExternalIdAsync(int id)
+    public Task<Game?> GetByExternalIdAsync(int externalId)
     {
-        return id == RegisteredExternalId
-            ? Task.FromResult<Game?>(GetGame(new Game() { ExternalId = id }))
+        return externalId == RegisteredExternalId
+            ? Task.FromResult<Game?>(GetGame(new Game() { ExternalId = externalId }))
             : Task.FromResult<Game?>(null);
+    }
+
+    public Task AddGameToUserAsync(Guid userId, Guid gameId, int platformId)
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task RemoveGameFromUserAsync(Guid userId, Guid gameId, int platformId)
+    {
+        return Task.CompletedTask;
     }
 }

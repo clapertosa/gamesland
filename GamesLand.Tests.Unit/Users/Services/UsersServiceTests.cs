@@ -2,11 +2,10 @@
 using System.Net;
 using System.Threading.Tasks;
 using GamesLand.Core.Errors;
-using GamesLand.Core.Users;
 using GamesLand.Core.Users.Entities;
 using GamesLand.Core.Users.Repositories;
 using GamesLand.Core.Users.Services;
-using GamesLand.Infrastructure.PostgreSQL.Services;
+using GamesLand.Infrastructure.PostgreSQL.Users;
 using GamesLand.Tests.Unit.Users.Repositories;
 using Xunit;
 
@@ -62,6 +61,23 @@ public class UsersServiceTests
     {
         RestException exception =
             await Assert.ThrowsAsync<RestException>(() => _usersService.GetUserByIdAsync(Guid.NewGuid()));
+
+        Assert.Equal(HttpStatusCode.NotFound, exception.StatusCode);
+    }
+    
+    [Fact]
+    public async Task Get_User_By_Email_If_Exists()
+    {
+        User? user = await _usersService.GetUserByEmailAsync(FakeUsersRepository.RegisteredEmail);
+
+        Assert.NotNull(user);
+    }
+
+    [Fact]
+    public async Task Get_User_By_Email_If_Not_Exists()
+    {
+        RestException exception =
+            await Assert.ThrowsAsync<RestException>(() => _usersService.GetUserByEmailAsync("random@random.com"));
 
         Assert.Equal(HttpStatusCode.NotFound, exception.StatusCode);
     }

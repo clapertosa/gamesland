@@ -1,29 +1,5 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\Claudio\AppData\Local\JetBrains\Rider2022.1\resharper-host\temp\Rider\vAny\CoverageData\_GamesLand.-1927029220\Snapshot\snapshot.utdcvr</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bb93dbb9_002D19d7_002D4ef0_002D884c_002D70b750b3beb8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Hashes_Password_Matches" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C::net6.0::GamesLand.Tests.Integration.PostgreSQL.Services.UserPasswordServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C::net6.0::GamesLand.Tests.Integration.PostgreSQL.Users.UsersRepositoryTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Create_User&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UserPasswordServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Create_User_If_Not_Exists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Create_User_If_Email_Not_Exists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Not_Create_A_User_If_Email_Exists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Get_User_By_Id_If_Exists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Get_User_By_Id_If_Not_Exists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Update_User_If_Exists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Update_User_If_Not_Exists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Delete_User_If_Exists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Users.Services.UsersServiceTests.Delete_User_If_Not_Exists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::26ECD673-8E8D-47CC-80D7-9D8284B1FD49::net6.0::GamesLand.Tests.E2E.Users.Controllers.UsersController.Sign_Up_User_With_Valid_Data&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::26ECD673-8E8D-47CC-80D7-9D8284B1FD49::net6.0::GamesLand.Tests.E2E.Users.Controllers.UsersController.Sign_Up_User_With_A_Not_Valid_Email&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::26ECD673-8E8D-47CC-80D7-9D8284B1FD49::net6.0::GamesLand.Tests.E2E.Users.Controllers.UsersController&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::26ECD673-8E8D-47CC-80D7-9D8284B1FD49::net6.0::GamesLand.Tests.E2E.Users.Controllers.UsersControllerTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Games.Services.GamesServiceTests.Create_Game_With_Valid_Data&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Games.Services.GamesServiceTests.Get_Game_By_Id_If_Exists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Games.Services.GamesServiceTests.Get_Game_By_Id_If_Not_Exists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Games.Services.GamesServiceTests.Create_Game_That_Already_Exists&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::E0707E91-6043-4AAD-BEDA-6BEB1E7BBC54::net6.0::GamesLand.Tests.Unit.Games.Services.GamesServiceTests&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C::net6.0::GamesLand.Tests.Integration.PostgreSQL.Games.GamesRepositoryTests.Create_Game_With_Valid_Data&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::70FB84AB-294A-438A-9ED3-7EFA9EDBCB7C::net6.0::GamesLand.Tests.Integration.PostgreSQL.Games.GamesRepositoryTests&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
+  &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

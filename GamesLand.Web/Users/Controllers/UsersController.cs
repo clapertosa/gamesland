@@ -1,8 +1,8 @@
-﻿using GamesLand.Core.Users;
-using GamesLand.Core.Users.Entities;
+﻿using GamesLand.Core.Users.Entities;
 using GamesLand.Core.Users.Services;
 using GamesLand.Web.Users.Requests;
 using GamesLand.Web.Users.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GamesLand.Web.Users.Controllers;
@@ -15,7 +15,8 @@ public class UsersController : BaseController
     {
         _usersService = usersService;
     }
-
+    
+    [AllowAnonymous]
     [HttpPost]
     public async Task<IActionResult> SignUp(CreateUserRequest user)
     {

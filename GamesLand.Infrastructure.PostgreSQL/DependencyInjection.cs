@@ -4,7 +4,6 @@ using FluentMigrator.Runner;
 using GamesLand.Core.Users.Repositories;
 using GamesLand.Core.Users.Services;
 using GamesLand.Infrastructure.PostgreSQL.Migrations;
-using GamesLand.Infrastructure.PostgreSQL.Services;
 using GamesLand.Infrastructure.PostgreSQL.Users;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

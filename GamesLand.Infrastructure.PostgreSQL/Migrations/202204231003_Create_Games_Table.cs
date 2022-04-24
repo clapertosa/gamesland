@@ -9,7 +9,6 @@ public class Create_Games_Table : Migration {
         Create.Table("games")
             .WithColumn("id").AsGuid().PrimaryKey().WithDefault(SystemMethods.NewSequentialId)
             .WithColumn("external_id").AsInt64().NotNullable().Unique()
-            .WithColumn("slug").AsString().NotNullable().Unique()
             .WithColumn("name").AsString().NotNullable()
             .WithColumn("name_original").AsString().Nullable()
             .WithColumn("description").AsString().Nullable()

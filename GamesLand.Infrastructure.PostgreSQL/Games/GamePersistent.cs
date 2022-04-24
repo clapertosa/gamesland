@@ -6,7 +6,6 @@ namespace GamesLand.Infrastructure.PostgreSQL.Games;
 public record GamePersistent : BaseEntity<Guid>
 {
     public int ExternalId { get; set; }
-    public string Slug { get; set; }
     public string Name { get; set; }
     public string NameOriginal { get; set; }
     public string Description { get; set; }
@@ -23,7 +22,6 @@ public record GamePersistent : BaseEntity<Guid>
     {
         Id = Id,
         ExternalId = ExternalId,
-        Slug = Slug,
         Name = Name,
         NameOriginal = NameOriginal,
         Description = Description,

@@ -17,12 +17,6 @@ public class GameBuilder
         return this;
     }
 
-    public GameBuilder WithSlug(string slug)
-    {
-        _game.Slug = slug;
-        return this;
-    }
-
     public GameBuilder WithName(string name)
     {
         _game.Name = name;

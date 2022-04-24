@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Dapper;
 using GamesLand.Core.Games.Entities;
 using GamesLand.Core.Games.Repositories;
 using GamesLand.Infrastructure.PostgreSQL.Games;
@@ -22,7 +24,6 @@ public class GamesRepositoryTests : IntegrationTestBase
     {
         Game game = new GameBuilder()
             .WithExternalId(1233)
-            .WithSlug("red-dead-redemption")
             .WithName("Red Dead Redemption")
             .WithDescription("Western")
             .WithRating(5.0)
@@ -32,7 +33,6 @@ public class GamesRepositoryTests : IntegrationTestBase
 
         Assert.Equal(game.Name, gameRecord.Name);
         Assert.Equal(game.Description, gameRecord.Description);
-        Assert.Equal(game.Slug, gameRecord.Slug);
         Assert.Equal(game.Rating, gameRecord.Rating);
         Assert.Equal(game.ExternalId, gameRecord.ExternalId);
     }
@@ -42,7 +42,6 @@ public class GamesRepositoryTests : IntegrationTestBase
     {
         Game game = new GameBuilder()
             .WithName("Name")
-            .WithSlug("name")
             .WithExternalId(123)
             .Build();
 
@@ -58,7 +57,6 @@ public class GamesRepositoryTests : IntegrationTestBase
     {
         Game game = new GameBuilder()
             .WithName("Name")
-            .WithSlug("name")
             .WithExternalId(123)
             .Build();
 
@@ -73,7 +71,6 @@ public class GamesRepositoryTests : IntegrationTestBase
     {
         Game game = new GameBuilder()
             .WithName("Name")
-            .WithSlug("name")
             .WithExternalId(123)
             .Build();
 
@@ -92,7 +89,6 @@ public class GamesRepositoryTests : IntegrationTestBase
     {
         Game game = new GameBuilder()
             .WithName("Name")
-            .WithSlug("name")
             .WithExternalId(123)
             .Build();
 
@@ -101,5 +97,29 @@ public class GamesRepositoryTests : IntegrationTestBase
         bool gameExists = await _gamesRepository.GetByIdAsync(gameRecord.Id) != null;
 
         Assert.False(gameExists);
+    }
+
+    [Fact]
+    public async Task Create_Existing_Game_Updates_It()
+    {
+        Game game = new GameBuilder()
+            .WithName("Castlevania")
+            .WithExternalId(123)
+            .WithDescription("Symphony of the Night")
+            .WithRating(5)
+            .WithReleased(DateTime.UtcNow)
+            .WithWebsite("www.www.com")
+            .Build();
+
+        await _gamesRepository.CreateAsync(game);
+        const string name = "Castlevania - Symphony of The Night";
+        game.NameOriginal = name;
+        Game gameRecord = await _gamesRepository.CreateAsync(game);
+
+        const string query = "SELECT COUNT(id) FROM games";
+        int res = await Connection.QueryFirstAsync<int>(query);
+
+        Assert.Equal(name, gameRecord.NameOriginal);
+        Assert.Equal(1, res);
     }
 }

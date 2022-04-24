@@ -1,5 +1,5 @@
 ﻿using GamesLand.Core.Users.Services;
-using GamesLand.Infrastructure.PostgreSQL.Services;
+using GamesLand.Infrastructure.PostgreSQL.Users;
 using Xunit;
 
 namespace GamesLand.Tests.Unit.Users.Services;

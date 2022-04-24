@@ -17,11 +17,10 @@ public class GamesRepository : IGamesRepository
     public async Task<Game> CreateAsync(Game entity)
     {
         const string query =
-            @"INSERT INTO games(external_id, slug, name, name_original, description, to_be_announced, background_image_path, background_image_additional_path, website, released, updated, rating, ratings_count) VALUES(@ExternalId, @Slug, @Name, @NameOriginal, @Description, @ToBeAnnounced, @BackgroundImagePath, @BackgroundImageAdditionalPath, @Website, @Released, @Updated, @Rating, @RatingsCount) RETURNING *";
+            "INSERT INTO games(external_id, name, name_original, description, to_be_announced, background_image_path, background_image_additional_path, website, released, updated, rating, ratings_count) VALUES(@ExternalId, @Name, @NameOriginal, @Description, @ToBeAnnounced, @BackgroundImagePath, @BackgroundImageAdditionalPath, @Website, @Released, @Updated, @Rating, @RatingsCount) ON CONFLICT(external_id) DO UPDATE SET name = @Name, name_original = @NameOriginal, description = @Description, to_be_announced = @ToBeAnnounced, background_image_path = @BackgroundImagePath, background_image_additional_path = @BackgroundImageAdditionalPath, website = @Website, released = @Released, updated = @Updated, rating = @Rating, ratings_count = @RatingsCount RETURNING *";
         GamePersistent gamePersistent = await _connection.QuerySingleAsync<GamePersistent>(query, new
         {
             entity.ExternalId,
-            entity.Slug,
             entity.Name,
             entity.NameOriginal,
             entity.Description,
@@ -58,7 +57,6 @@ public class GamesRepository : IGamesRepository
         GamePersistent gamePersistent = await _connection.QueryFirstAsync<GamePersistent>(query, new
         {
             Id = id,
-            entity.Slug,
             entity.Name,
             entity.NameOriginal,
             entity.Description,
@@ -80,11 +78,25 @@ public class GamesRepository : IGamesRepository
         return _connection.ExecuteAsync(query, new { Id = id });
     }
 
-    public async Task<Game?> GetByExternalIdAsync(int id)
+    public async Task<Game?> GetByExternalIdAsync(int externalId)
     {
         const string query = "SELECT * FROM games WHERE external_id = @ExternalId";
         GamePersistent gamePersistent =
-            await _connection.QueryFirstOrDefaultAsync<GamePersistent>(query, new { ExternalId = id });
+            await _connection.QueryFirstOrDefaultAsync<GamePersistent>(query, new { ExternalId = externalId });
         return gamePersistent?.ToGame();
+    }
+
+    public Task AddGameToUserAsync(Guid userId, Guid gameId, int platformId)
+    {
+        const string query =
+            "INSERT INTO user_game(user_id, game_id, platform_id) VALUES(@UserId, @GameId, @PlatformId)";
+        return _connection.ExecuteAsync(query, new { UserId = userId, GameId = gameId, PlatformId = platformId });
+    }
+
+    public Task RemoveGameFromUserAsync(Guid userId, Guid gameId, int platformId)
+    {
+        const string query =
+            "DELETE FROM user_game WHERE user_id = @UserId AND game_id = @GameId AND platform_id = @PlatformId";
+        return _connection.ExecuteAsync(query, new { UserId = userId, GameId = gameId, PlatformId = platformId });
     }
 }

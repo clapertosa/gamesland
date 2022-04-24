@@ -9,4 +9,5 @@ public interface IGamesService
     Task<Game?> GetGameByExternalIdAsync(int id);
     Task<Game> UpdateGameAsync(Guid id, Game game);
     Task DeleteGameAsync(Guid id);
+    Task AddGameToUserAsync(Guid userId, Game game, int platformId);
 }

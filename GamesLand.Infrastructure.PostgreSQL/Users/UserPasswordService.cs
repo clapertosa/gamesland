@@ -1,6 +1,6 @@
 ﻿using GamesLand.Core.Users.Services;
 
-namespace GamesLand.Infrastructure.PostgreSQL.Services;
+namespace GamesLand.Infrastructure.PostgreSQL.Users;
 
 public class UserPasswordService : IUserPasswordService
 {
