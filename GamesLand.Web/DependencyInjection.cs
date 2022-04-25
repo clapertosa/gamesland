@@ -1,6 +1,8 @@
 ﻿using System.Text;
+using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
 using GamesLand.Infrastructure.PostgreSQL;
+using GamesLand.Infrastructure.RAWG.Handlers;
 using GamesLand.Infrastructure.RAWG.Services;
 using GamesLand.Web.Users.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,7 +15,12 @@ public static class DependencyInjection
     public static void AddServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(typeof(CreateUserValidator).Assembly));
-        services.AddControllers();
+        services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
+            });
         services.AddPostgreSqlInfrastructure(configuration);
 
         // Authentication
@@ -37,6 +44,10 @@ public static class DependencyInjection
         services.AddAuthorization(options => { });
 
         // RAWG Client
-        services.AddHttpClient<IRawgService, RawgService>();
+        services.AddTransient<RawgHttpMessageHandler>();
+        services
+            .AddHttpClient<IRawgService, RawgService>("RAWG-Client",
+                client => { client.BaseAddress = new Uri("https://api.rawg.io/api/"); })
+            .AddHttpMessageHandler<RawgHttpMessageHandler>();
     }
 }

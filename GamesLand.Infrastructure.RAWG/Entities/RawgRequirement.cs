@@ -2,6 +2,6 @@
 
 public record RawgRequirement
 {
-    public string Minimum { get; set; }
-    public string Recommended { get; set; }
+    public string? Minimum { get; set; }
+    public string? Recommended { get; set; }
 }

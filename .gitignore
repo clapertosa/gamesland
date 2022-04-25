@@ -3,3 +3,5 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+GamesLand.Web/config.json
+GamesLand.Web/config.test.json

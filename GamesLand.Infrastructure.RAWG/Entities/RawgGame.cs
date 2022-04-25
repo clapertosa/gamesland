@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace GamesLand.Infrastructure.RAWG.Entities;
 
@@ -7,30 +8,45 @@ public record RawgGame
     public int Id { get; set; }
     public string Slug { get; set; }
     public string Name { get; set; }
-    public string NameOriginal { get; set; }
-    public string Description { get; set; }
-    public int Metacritic { get; set; }
-    public string Released { get; set; }
-    public bool ToBeAnnounced { get; set; }
-    public string Updated { get; set; }
-    public string BackgroundImage { get; set; }
-    public string BackgroundImageAdditional { get; set; }
-    public string Website { get; set; }
-    public double Rating { get; set; }
-    public int RatingTop { get; set; }
-    public string Added { get; set; }
-    [Description("In Hours")] public int Playtime { get; set; }
-    public int ScreenshotCount { get; set; }
-    public int MoviesCount { get; set; }
-    public int CreatorsCount { get; set; }
-    public int AchievementsCount { get; set; }
-    public string ParentAchievementsCount { get; set; }
-    public string RedditUrl { get; set; }
-    public int RatingsCount { get; set; }
-    public string[] AlternativeNames { get; set; }
-    public string MetacriticUrl { get; set; }
-    public int ParentsCount { get; set; }
-    public int AdditionsCount { get; set; }
-    public int GameSeriesCount { get; set; }
-    public RawgEsrbRating RawgEsrbRating { get; set; }
+    [JsonPropertyName("name_original")] public string? NameOriginal { get; set; }
+    public string? Description { get; set; }
+    public int? Metacritic { get; set; }
+    public string? Released { get; set; }
+    public bool? Tba { get; set; }
+    public string? Updated { get; set; }
+    [JsonPropertyName("background_image")] public string? BackgroundImage { get; set; }
+
+    [JsonPropertyName("background_image_additional")]
+    public string? BackgroundImageAdditional { get; set; }
+
+    public string? Website { get; set; }
+    public double? Rating { get; set; }
+    [JsonPropertyName("rating_top")] public int? RatingTop { get; set; }
+    public int? Added { get; set; }
+    [Description("In Hours")] public int? Playtime { get; set; }
+    [JsonPropertyName("screenshot_count")] public int? ScreenshotCount { get; set; }
+    [JsonPropertyName("movies_count")] public int? MoviesCount { get; set; }
+    [JsonPropertyName("creators_count")] public int? CreatorsCount { get; set; }
+
+    [JsonPropertyName("achievements_count")]
+    public int? AchievementsCount { get; set; }
+
+    [JsonPropertyName("parent_achievements_count")]
+    public int? ParentAchievementsCount { get; set; }
+
+    [JsonPropertyName("reddit_url")] public string? RedditUrl { get; set; }
+    [JsonPropertyName("ratings_count")] public int? RatingsCount { get; set; }
+
+    [JsonPropertyName("alternative_names")]
+    public string[]? AlternativeNames { get; set; }
+
+    [JsonPropertyName("metacritic_url")] public string? MetacriticUrl { get; set; }
+    [JsonPropertyName("parents_count")] public int? ParentsCount { get; set; }
+    [JsonPropertyName("additions_count")] public int? AdditionsCount { get; set; }
+
+    [JsonPropertyName("game_series_count")]
+    public int? GameSeriesCount { get; set; }
+
+    [JsonPropertyName("esrb_rating")] public RawgEsrbRating? RawgEsrbRating { get; set; }
+    public IEnumerable<RawgPlatformParent>? Platforms { get; set; }
 }
