@@ -3,7 +3,7 @@ using GamesLand.Core.Users.Entities;
 
 namespace GamesLand.Web.Users.Requests;
 
-public record CreateUserRequest
+public record SignUpUserRequest
 {
     public string? FirstName { get; set; }
     public string? LastName { get; set; }

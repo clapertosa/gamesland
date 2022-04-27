@@ -26,7 +26,7 @@ public static class DependencyInjection
         services.AddTransient<IDbConnection>(_ => new NpgsqlConnection(configuration["pgConnection"]));
 
         // Services
-        services.AddSingleton<IUserPasswordService, UserPasswordService>();
+        services.AddSingleton<IUserAuthentication, UserAuthentication>();
         services.AddScoped<IUsersService, UsersService>();
 
         // Repositories

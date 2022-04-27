@@ -18,7 +18,7 @@ public class UsersServiceTests
     public UsersServiceTests()
     {
         IUsersRepository fakeUsersRepository = new FakeUsersRepository();
-        _usersService = new UsersService(fakeUsersRepository, new UserPasswordService());
+        _usersService = new UsersService(fakeUsersRepository, new UserAuthentication(null));
     }
 
     [Fact]
@@ -30,7 +30,7 @@ public class UsersServiceTests
             Password = "password"
         };
 
-        User userRecord = await _usersService.CreateUserAsync(user);
+        User userRecord = await _usersService.SignUpUserAsync(user);
 
         Assert.NotNull(userRecord);
     }
@@ -43,7 +43,7 @@ public class UsersServiceTests
             Email = FakeUsersRepository.RegisteredEmail,
             Password = "password"
         };
-        RestException exception = await Assert.ThrowsAsync<RestException>(() => _usersService.CreateUserAsync(user));
+        RestException exception = await Assert.ThrowsAsync<RestException>(() => _usersService.SignUpUserAsync(user));
 
         Assert.Equal(HttpStatusCode.Conflict, exception.StatusCode);
     }
@@ -64,7 +64,7 @@ public class UsersServiceTests
 
         Assert.Equal(HttpStatusCode.NotFound, exception.StatusCode);
     }
-    
+
     [Fact]
     public async Task Get_User_By_Email_If_Exists()
     {

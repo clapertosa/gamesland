@@ -6,20 +6,20 @@ namespace GamesLand.Tests.Unit.Users.Services;
 
 public class UserPasswordServiceTests
 {
-    private readonly IUserPasswordService _userPasswordService;
+    private readonly IUserAuthentication _userAuthentication;
 
     public UserPasswordServiceTests()
     {
-        _userPasswordService = new UserPasswordService();
+        _userAuthentication = new UserAuthentication(null);
     }
 
     [Fact]
     public void Hashed_Password_Matching()
     {
         string password = "password";
-        string hashedPassword = _userPasswordService.Hash(password);
+        string hashedPassword = _userAuthentication.Hash(password);
 
-        Assert.True(_userPasswordService.Match(password, hashedPassword));
+        Assert.True(_userAuthentication.Match(password, hashedPassword));
     }
 
     [Fact]
@@ -27,8 +27,8 @@ public class UserPasswordServiceTests
     {
         string password = "password";
         string wrongPassword = "Password";
-        string hashedPassword = _userPasswordService.Hash(password);
+        string hashedPassword = _userAuthentication.Hash(password);
 
-        Assert.False(_userPasswordService.Match(wrongPassword, hashedPassword));
+        Assert.False(_userAuthentication.Match(wrongPassword, hashedPassword));
     }
 }

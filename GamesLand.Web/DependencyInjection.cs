@@ -14,7 +14,7 @@ public static class DependencyInjection
 {
     public static void AddServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(typeof(CreateUserValidator).Assembly));
+        services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(typeof(SignUpUserValidator).Assembly));
         services.AddControllers()
             .AddJsonOptions(options =>
             {
@@ -33,7 +33,7 @@ public static class DependencyInjection
             var key = Encoding.UTF8.GetBytes(configuration["JWT:secret"]);
             options.TokenValidationParameters = new TokenValidationParameters()
             {
-                ValidateIssuer = true,
+                ValidateIssuer = false,
                 ValidateAudience = false,
                 ValidateLifetime = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key)

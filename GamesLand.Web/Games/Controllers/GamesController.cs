@@ -20,15 +20,13 @@ public class GamesController : BaseController
     {
         throw new NotImplementedException();
     }
-
-    [AllowAnonymous]
-    [HttpGet("search")]
+    
+    [HttpPost("search")]
     public async Task<IActionResult> SearchGame(SearchRequest searchRequest)
     {
         return Ok(await _rawgService.SearchAsync(searchRequest));
     }
-
-    [AllowAnonymous]
+    
     [HttpGet("{gameId:int}")]
     public async Task<IActionResult> GetGame(int gameId)
     {

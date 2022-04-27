@@ -24,7 +24,7 @@ public class GamesServiceTests
         _gamesService = new GamesService(
             new FakeGamesRepository(),
             new PlatformsService(new FakePlatformsRepository()),
-            new UsersService(new FakeUsersRepository(), new UserPasswordService())
+            new UsersService(new FakeUsersRepository(), new UserAuthentication(null))
         );
     }
 

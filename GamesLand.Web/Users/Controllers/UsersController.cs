@@ -15,13 +15,20 @@ public class UsersController : BaseController
     {
         _usersService = usersService;
     }
-    
+
     [AllowAnonymous]
-    [HttpPost]
-    public async Task<IActionResult> SignUp(CreateUserRequest user)
+    [HttpPost("signup")]
+    public async Task<IActionResult> SignUp(SignUpUserRequest user)
     {
-        User newUser = await _usersService.CreateUserAsync(user.ToUser());
+        User newUser = await _usersService.SignUpUserAsync(user.ToUser());
         return CreatedAtAction(nameof(SignUp), UserResponse.FromUser(newUser));
+    }
+
+    [AllowAnonymous]
+    [HttpPost("signin")]
+    public async Task<IActionResult> SignIn(SignInUserRequest user)
+    {
+        return Ok(await _usersService.SignInUserAsync(user.ToUser()));
     }
 
     [HttpGet("{Guid id}")]

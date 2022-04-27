@@ -52,7 +52,7 @@ public class UsersRepository : IUsersRepository
     public async Task<User?> GetByEmailAsync(string email)
     {
         const string query =
-            "SELECT id, first_name, last_name, email, created_at, updated_at FROM users WHERE email = @Email";
+            "SELECT id, first_name, last_name, email, password, created_at, updated_at FROM users WHERE email = @Email";
         UserPersistent user = await _connection.QueryFirstOrDefaultAsync<UserPersistent>(query, new { Email = email });
         return user?.ToUser();
     }

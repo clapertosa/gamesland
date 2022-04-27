@@ -8,21 +8,31 @@ namespace GamesLand.Core.Users.Services;
 public class UsersService : IUsersService
 {
     private readonly IUsersRepository _usersRepository;
-    private readonly IUserPasswordService _userPasswordService;
+    private readonly IUserAuthentication _userAuthentication;
 
-    public UsersService(IUsersRepository usersRepository, IUserPasswordService userPasswordService)
+    public UsersService(IUsersRepository usersRepository, IUserAuthentication userAuthentication)
     {
         _usersRepository = usersRepository;
-        _userPasswordService = userPasswordService;
+        _userAuthentication = userAuthentication;
     }
 
-    public async Task<User> CreateUserAsync(User user)
+    public async Task<User> SignUpUserAsync(User user)
     {
         User? userRecord = await _usersRepository.GetByEmailAsync(user.Email);
         if (userRecord != null)
             throw new RestException(HttpStatusCode.Conflict, new { Meesage = "Email already registered." });
-        string hashedPassword = _userPasswordService.Hash(user.Password);
+        string hashedPassword = _userAuthentication.Hash(user.Password);
         return await _usersRepository.CreateAsync(user, hashedPassword);
+    }
+
+    public async Task<string> SignInUserAsync(User user)
+    {
+        User? userRecord = await _usersRepository.GetByEmailAsync(user.Email);
+
+        if (userRecord == null || !_userAuthentication.Match(user.Password, userRecord.Password))
+            throw new RestException(HttpStatusCode.Forbidden, new { Message = "Email or Password wrong." });
+
+        return _userAuthentication.GetToken(user);
     }
 
     public async Task<User?> GetUserByIdAsync(Guid id)

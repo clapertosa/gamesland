@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using GamesLand.Core.Users;
 using GamesLand.Core.Users.Entities;
 using GamesLand.Tests.Helpers;
 using GamesLand.Web.Users.Responses;
@@ -22,7 +21,7 @@ public class UsersControllerTests : IntegrationTestBase
             Password = "password"
         };
 
-        var res = await Client.PostAsJsonAsync("api/users", user);
+        var res = await Client.PostAsJsonAsync("api/users/signup", user);
         UserResponse? userResponse = await res.Content.ReadFromJsonAsync<UserResponse>();
 
         Assert.Equal(HttpStatusCode.Created, res.StatusCode);
@@ -42,7 +41,7 @@ public class UsersControllerTests : IntegrationTestBase
             Password = "password"
         };
 
-        var res = await Client.PostAsJsonAsync("api/users", user);
+        var res = await Client.PostAsJsonAsync("api/users/signup", user);
 
         Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
     }
@@ -57,7 +56,7 @@ public class UsersControllerTests : IntegrationTestBase
             Password = "password"
         };
 
-        var res = await Client.PostAsJsonAsync("api/users", user);
+        var res = await Client.PostAsJsonAsync("api/users/signup", user);
 
         Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
     }
@@ -73,7 +72,7 @@ public class UsersControllerTests : IntegrationTestBase
             Password = "pass"
         };
 
-        var res = await Client.PostAsJsonAsync("api/users", user);
+        var res = await Client.PostAsJsonAsync("api/users/signup", user);
 
         Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
     }
@@ -88,8 +87,26 @@ public class UsersControllerTests : IntegrationTestBase
             Email = "email@email.com"
         };
 
-        var res = await Client.PostAsJsonAsync("api/users", user);
+        var res = await Client.PostAsJsonAsync("api/users/signup", user);
 
         Assert.Equal(HttpStatusCode.BadRequest, res.StatusCode);
+    }
+
+    [Fact]
+    public async Task Sign_In_User_With_Valid_Data()
+    {
+        User user = new User()
+        {
+            FirstName = "Name",
+            LastName = "Last name",
+            Email = "email@email.com",
+            Password = "password"
+        };
+        
+        await Client.PostAsJsonAsync("api/users/signup", user);
+        var res = await Client.PostAsJsonAsync("api/users/signin", user);
+        string token = await res.Content.ReadAsStringAsync();
+
+        Assert.NotNull(token);
     }
 }
