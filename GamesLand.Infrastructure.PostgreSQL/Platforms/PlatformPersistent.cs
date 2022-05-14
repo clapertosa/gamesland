@@ -3,7 +3,7 @@ using GamesLand.Core.Platforms.Entities;
 
 namespace GamesLand.Infrastructure.PostgreSQL.Platforms;
 
-public record PlatformPersistent : BaseEntity<Guid>
+internal record PlatformPersistent : BaseEntity<Guid>
 {
     public int ExternalId { get; set; }
     public string Name { get; set; }

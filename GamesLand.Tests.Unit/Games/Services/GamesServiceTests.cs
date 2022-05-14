@@ -45,7 +45,7 @@ public class GamesServiceTests
 
         Assert.Equal(game.Name, gameRecord.Name);
         Assert.Equal(game.Description, gameRecord.Description);
-        Assert.Equal(game.Released.ToLongTimeString(), gameRecord.Released.ToLongTimeString());
+        Assert.Equal(game.Released.Value.ToLongTimeString(), gameRecord.Released.Value.ToLongTimeString());
         Assert.Equal(game.Website, gameRecord.Website);
         Assert.Equal(game.ToBeAnnounced, gameRecord.ToBeAnnounced);
     }

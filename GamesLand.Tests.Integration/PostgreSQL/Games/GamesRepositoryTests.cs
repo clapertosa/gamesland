@@ -27,6 +27,10 @@ public class GamesRepositoryTests : IntegrationTestBase
             .WithName("Red Dead Redemption")
             .WithDescription("Western")
             .WithRating(5.0)
+            .WithToBeAnnounced(true)
+            .WithRatingsCount(0)
+            .WithUpdated(DateTime.Now)
+            .WithRating(0)
             .Build();
 
         Game gameRecord = await _gamesRepository.CreateAsync(game);
@@ -43,6 +47,10 @@ public class GamesRepositoryTests : IntegrationTestBase
         Game game = new GameBuilder()
             .WithName("Name")
             .WithExternalId(123)
+            .WithToBeAnnounced(true)
+            .WithRatingsCount(0)
+            .WithUpdated(DateTime.Now)
+            .WithRating(0)
             .Build();
 
         Game gameRecord = await _gamesRepository.CreateAsync(game);
@@ -58,6 +66,10 @@ public class GamesRepositoryTests : IntegrationTestBase
         Game game = new GameBuilder()
             .WithName("Name")
             .WithExternalId(123)
+            .WithToBeAnnounced(true)
+            .WithRatingsCount(0)
+            .WithUpdated(DateTime.Now)
+            .WithRating(0)
             .Build();
 
         await _gamesRepository.CreateAsync(game);
@@ -72,6 +84,10 @@ public class GamesRepositoryTests : IntegrationTestBase
         Game game = new GameBuilder()
             .WithName("Name")
             .WithExternalId(123)
+            .WithToBeAnnounced(true)
+            .WithRatingsCount(0)
+            .WithUpdated(DateTime.Now)
+            .WithRating(0)
             .Build();
 
         string newName = "new name";
@@ -90,6 +106,10 @@ public class GamesRepositoryTests : IntegrationTestBase
         Game game = new GameBuilder()
             .WithName("Name")
             .WithExternalId(123)
+            .WithToBeAnnounced(true)
+            .WithRatingsCount(0)
+            .WithUpdated(DateTime.Now)
+            .WithRating(0)
             .Build();
 
         Game? gameRecord = await _gamesRepository.CreateAsync(game);
@@ -109,6 +129,10 @@ public class GamesRepositoryTests : IntegrationTestBase
             .WithRating(5)
             .WithReleased(DateTime.UtcNow)
             .WithWebsite("www.www.com")
+            .WithToBeAnnounced(true)
+            .WithRatingsCount(0)
+            .WithUpdated(DateTime.Now)
+            .WithRating(0)
             .Build();
 
         await _gamesRepository.CreateAsync(game);

@@ -27,7 +27,14 @@ public class UserAuthentication : IUserAuthentication
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:secret"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
         var tokenDescriptor = new JwtSecurityToken(null, null, claims,
-            expires: DateTime.Now.AddMinutes(10), signingCredentials: credentials);
+            expires: DateTime.Now.AddYears(10), signingCredentials: credentials);
         return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
+    }
+
+    public string GetUserEmailFromToken(string jwt)
+    {
+        var jwtHandler = new JwtSecurityTokenHandler();
+        var token = jwtHandler.ReadJwtToken(jwt);
+        return token.Claims.First(c => c.Type == ClaimTypes.Email).Value;
     }
 }

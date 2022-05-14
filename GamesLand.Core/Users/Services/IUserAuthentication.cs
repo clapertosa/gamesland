@@ -6,5 +6,6 @@ public interface IUserAuthentication
 {
     string Hash(string password);
     bool Match(string password, string hashedPassword);
-    public string GetToken(User user);
+    string GetToken(User user);
+    string GetUserEmailFromToken(string jwt);
 }

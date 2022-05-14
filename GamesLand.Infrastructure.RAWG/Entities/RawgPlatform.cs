@@ -8,5 +8,5 @@ public record RawgPlatform
     public string Slug { get; set; }
     public string Name { get; set; }
     public string? ReleasedAt { get; set; }
-    public IEnumerable<RawgRequirement> Requirements { get; set; }
+    public IEnumerable<RawgRequirement>? Requirements { get; set; }
 };

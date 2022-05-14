@@ -41,7 +41,7 @@ public static class DependencyInjection
         });
 
         // Authorization
-        services.AddAuthorization(options => { });
+        services.AddAuthorization();
 
         // RAWG Client
         services.AddTransient<RawgHttpMessageHandler>();

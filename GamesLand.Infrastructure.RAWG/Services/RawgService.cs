@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http.Json;
 using GamesLand.Infrastructure.RAWG.Entities;
 using GamesLand.Infrastructure.RAWG.Requests;
 using Microsoft.Extensions.Configuration;
@@ -29,15 +29,13 @@ public class RawgService : IRawgService
 
     public async Task<IEnumerable<RawgGame>> SearchAsync(SearchRequest searchRequest)
     {
-        string res = await _client.GetStringAsync("games" + AddSearchParams(searchRequest));
-        RawgGameResults? rawgRes = JsonSerializer.Deserialize<RawgGameResults>(res);
-        return rawgRes?.Results ?? Array.Empty<RawgGame>();
+        RawgGameResults? res =
+            await _client.GetFromJsonAsync<RawgGameResults>("games" + AddSearchParams(searchRequest));
+        return res?.Results ?? Array.Empty<RawgGame>();
     }
 
     public async Task<RawgGame?> GetGame(int gameId)
     {
-        string res = await _client.GetStringAsync($"games/{gameId}");
-
-        return JsonSerializer.Deserialize<RawgGame?>(res);
+        return await _client.GetFromJsonAsync<RawgGame>($"games/{gameId}");
     }
 }

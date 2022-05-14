@@ -17,6 +17,11 @@ var migrationRunner = scope.ServiceProvider.GetService<IMigrationRunner>();
 migrationRunner?.MigrateUp();
 
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseCors(policyBuilder =>
+{
+    policyBuilder.AllowAnyOrigin();
+    policyBuilder.AllowAnyHeader();
+});
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

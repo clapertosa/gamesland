@@ -1,32 +1,52 @@
-﻿using GamesLand.Infrastructure.RAWG.Requests;
+﻿using GamesLand.Core.Games.Services;
+using GamesLand.Core.Users.Entities;
+using GamesLand.Core.Users.Services;
+using GamesLand.Infrastructure.RAWG.Requests;
 using GamesLand.Infrastructure.RAWG.Services;
 using GamesLand.Web.Games.Requests;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GamesLand.Web.Games.Controllers;
 
 public class GamesController : BaseController
 {
+    private readonly IGamesService _gamesService;
     private readonly IRawgService _rawgService;
+    private readonly IUsersService _usersService;
+    private readonly IUserAuthentication _userAuthentication;
 
-    public GamesController(IRawgService rawgService)
+    public GamesController(
+        IGamesService gamesService,
+        IRawgService rawgService,
+        IUsersService usersService,
+        IUserAuthentication userAuthentication
+    )
     {
+        _gamesService = gamesService;
         _rawgService = rawgService;
+        _usersService = usersService;
+        _userAuthentication = userAuthentication;
     }
 
-    [HttpPost("games")]
+    [HttpPost("add")]
     public async Task<IActionResult> AddGameToUser(AddGameToUserRequest addGameToUserRequest)
     {
-        throw new NotImplementedException();
+        string userEmail = _userAuthentication.GetUserEmailFromToken((Request.Headers.Authorization[0].Split(" ")[1]));
+        User? userRecord =
+            await _usersService.GetUserByEmailAsync(userEmail);
+        await _gamesService.AddGameToUserAsync(
+            userRecord.Id,
+            addGameToUserRequest.ToGame(),
+            addGameToUserRequest.ToPlatform().ExternalId);
+        return Ok();
     }
-    
+
     [HttpPost("search")]
     public async Task<IActionResult> SearchGame(SearchRequest searchRequest)
     {
         return Ok(await _rawgService.SearchAsync(searchRequest));
     }
-    
+
     [HttpGet("{gameId:int}")]
     public async Task<IActionResult> GetGame(int gameId)
     {

@@ -3,7 +3,7 @@ using GamesLand.Core.Games.Entities;
 
 namespace GamesLand.Infrastructure.PostgreSQL.Games;
 
-public record GamePersistent : BaseEntity<Guid>
+internal record GamePersistent : BaseEntity<Guid>
 {
     public int ExternalId { get; set; }
     public string Name { get; set; }
