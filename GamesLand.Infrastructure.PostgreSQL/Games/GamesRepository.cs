@@ -86,7 +86,7 @@ public class GamesRepository : IGamesRepository
         return gamePersistent?.ToGame();
     }
 
-    public Task AddGameToUserAsync(Guid userId, Guid gameId, int platformId)
+    public Task AddGameToUserAsync(Guid userId, Guid gameId, Guid platformId)
     {
         const string query =
             "INSERT INTO user_game(user_id, game_id, platform_id) VALUES(@UserId, @GameId, @PlatformId)";

@@ -2,6 +2,7 @@
 using GamesLand.Core.Errors;
 using GamesLand.Core.Games.Entities;
 using GamesLand.Core.Games.Repositories;
+using GamesLand.Core.Platforms.Entities;
 using GamesLand.Core.Platforms.Services;
 using GamesLand.Core.Users.Entities;
 using GamesLand.Core.Users.Services;
@@ -69,8 +70,9 @@ public class GamesService : IGamesService
         if (gameRecord != null) await _gamesRepository.UpdateAsync(gameRecord.Id, game);
         else gameRecord = await _gamesRepository.CreateAsync(game);
 
-        await _platformsService.CreateMultiplePlatformsAsync(game.Platforms);
+        IEnumerable<Platform> platforms = await _platformsService.CreateMultiplePlatformsAsync(game.Platforms);
+        Platform platform = platforms.First(x => x.ExternalId == platformId);
 
-        await _gamesRepository.AddGameToUserAsync(userRecord.Id, gameRecord.Id, platformId);
+        await _gamesRepository.AddGameToUserAsync(userRecord.Id, gameRecord.Id, platform.Id);
     }
 }

@@ -38,11 +38,11 @@ public class GamesController : BaseController
             userRecord.Id,
             addGameToUserRequest.ToGame(),
             addGameToUserRequest.ToPlatform().ExternalId);
-        return Ok();
+        return CreatedAtAction(nameof(AddGameToUser), null);
     }
 
-    [HttpPost("search")]
-    public async Task<IActionResult> SearchGame(SearchRequest searchRequest)
+    [HttpGet("search")]
+    public async Task<IActionResult> SearchGame([FromQuery] SearchRequest searchRequest)
     {
         return Ok(await _rawgService.SearchAsync(searchRequest));
     }

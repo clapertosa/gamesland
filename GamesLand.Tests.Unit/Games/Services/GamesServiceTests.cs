@@ -126,7 +126,17 @@ public class GamesServiceTests
         try
         {
             await _gamesService.AddGameToUserAsync(FakeUsersRepository.RegisteredId,
-                new Game() { Platforms = new[] { new Platform() {ExternalId = 1} } }, 1);
+                new Game()
+                {
+                    Platforms = new[]
+                    {
+                        new Platform()
+                        {
+                            Id = FakePlatformsRepository.RegisteredId,
+                            ExternalId = FakePlatformsRepository.RegisteredExternalId
+                        }
+                    }
+                }, FakePlatformsRepository.RegisteredExternalId);
             Assert.True(true);
         }
         catch
