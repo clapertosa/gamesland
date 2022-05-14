@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Text.Json.Serialization;
+using GamesLand.Core.Games.Entities;
 
 namespace GamesLand.Infrastructure.RAWG.Entities;
 
@@ -49,4 +50,20 @@ public record RawgGame
 
     [JsonPropertyName("esrb_rating")] public RawgEsrbRating? RawgEsrbRating { get; set; }
     public IEnumerable<RawgPlatformParent>? Platforms { get; set; }
+
+    public Game ToGame() => new Game()
+    {
+        ExternalId = Id,
+        Name = Name,
+        NameOriginal = NameOriginal,
+        Description = Description,
+        Released = Released != null ? DateTime.Parse(Released) : null,
+        Updated = Updated != null ? DateTime.Parse(Updated) : null,
+        ToBeAnnounced = Tba,
+        BackgroundImagePath = BackgroundImage,
+        BackgroundImageAdditionalPath = BackgroundImageAdditional,
+        Website = Website,
+        Rating = Rating,
+        RatingsCount = RatingsCount,
+    };
 }

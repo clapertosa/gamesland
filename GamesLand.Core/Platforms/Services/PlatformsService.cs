@@ -55,4 +55,9 @@ public class PlatformsService : IPlatformsService
             throw new RestException(HttpStatusCode.NotFound, new { Message = "Platform not found." });
         await _platformsRepository.DeleteAsync(id);
     }
+
+    public Task SaveGameReleaseDateAsync(Guid gameId, Guid platformId, DateTime? releaseDate)
+    {
+        return _platformsRepository.SaveGameReleaseDateAsync(gameId, platformId, releaseDate);
+    }
 }

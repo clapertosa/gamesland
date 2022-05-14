@@ -4,9 +4,11 @@ using FluentValidation.AspNetCore;
 using GamesLand.Infrastructure.PostgreSQL;
 using GamesLand.Infrastructure.RAWG.Handlers;
 using GamesLand.Infrastructure.RAWG.Services;
+using GamesLand.Infrastructure.Scheduler.Jobs;
 using GamesLand.Web.Users.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Quartz;
 
 namespace GamesLand.Web;
 
@@ -42,6 +44,21 @@ public static class DependencyInjection
 
         // Authorization
         services.AddAuthorization();
+
+        // Quartz
+        services.AddQuartz(q =>
+        {
+            JobKey sendReleasedGamesMailJobKey = new JobKey("SendReleasedGamesMailJob");
+            q.UseMicrosoftDependencyInjectionJobFactory();
+
+            q.AddJob<SendReleasedGamesMailJob>(config => config
+                .WithIdentity(sendReleasedGamesMailJobKey));
+
+            q.AddTrigger(config => config
+                .ForJob(sendReleasedGamesMailJobKey)
+                .WithCronSchedule("0 0 0 * * ?"));
+        });
+        services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
         // RAWG Client
         services.AddTransient<RawgHttpMessageHandler>();

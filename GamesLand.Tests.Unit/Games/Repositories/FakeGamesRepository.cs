@@ -87,4 +87,9 @@ public class FakeGamesRepository : IGamesRepository
     {
         return Task.CompletedTask;
     }
+
+    public async Task<IEnumerable<Game>> GetUsersGameAsync()
+    {
+        throw new NotImplementedException();
+    }
 }

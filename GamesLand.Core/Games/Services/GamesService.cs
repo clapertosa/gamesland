@@ -73,6 +73,14 @@ public class GamesService : IGamesService
         IEnumerable<Platform> platforms = await _platformsService.CreateMultiplePlatformsAsync(game.Platforms);
         Platform platform = platforms.First(x => x.ExternalId == platformId);
 
+        DateTime? releaseDate = game.Platforms.First(x => x.ExternalId == platform.ExternalId).GameReleaseDate;
+        await _platformsService.SaveGameReleaseDateAsync(gameRecord.Id, platform.Id, releaseDate);
+
         await _gamesRepository.AddGameToUserAsync(userRecord.Id, gameRecord.Id, platform.Id);
+    }
+
+    public Task<IEnumerable<Game>> GetUsersGamesAsync()
+    {
+        return _gamesRepository.GetUsersGameAsync();
     }
 }

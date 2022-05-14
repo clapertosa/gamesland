@@ -11,6 +11,7 @@
         <ProjectReference Include="..\GamesLand.Core\GamesLand.Core.csproj" />
         <ProjectReference Include="..\GamesLand.Infrastructure.PostgreSQL\GamesLand.Infrastructure.PostgreSQL.csproj" />
         <ProjectReference Include="..\GamesLand.Infrastructure.RAWG\GamesLand.Infrastructure.RAWG.csproj" />
+        <ProjectReference Include="..\GamesLand.Infrastructure.Scheduler\GamesLand.Infrastructure.Scheduler.csproj" />
     </ItemGroup>
     
     <ItemGroup>

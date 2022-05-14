@@ -1,19 +1,16 @@
 ﻿using System.Net.Http.Json;
 using GamesLand.Infrastructure.RAWG.Entities;
 using GamesLand.Infrastructure.RAWG.Requests;
-using Microsoft.Extensions.Configuration;
 
 namespace GamesLand.Infrastructure.RAWG.Services;
 
 public class RawgService : IRawgService
 {
     private readonly HttpClient _client;
-    private readonly IConfiguration _configuration;
 
-    public RawgService(HttpClient client, IConfiguration configuration)
+    public RawgService(HttpClient client)
     {
         _client = client;
-        _configuration = configuration;
     }
 
     private string AddSearchParams(SearchRequest searchRequest)

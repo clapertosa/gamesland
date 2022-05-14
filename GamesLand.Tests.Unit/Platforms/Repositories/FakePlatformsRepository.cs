@@ -82,4 +82,9 @@ public class FakePlatformsRepository : IPlatformsRepository
             ? Task.FromResult<Platform?>(GetPlatform(new Platform() { ExternalId = externalId }))
             : Task.FromResult<Platform?>(null);
     }
+
+    public async Task SaveGameReleaseDateAsync(Guid gameId, Guid platformId, DateTime? releaseDate)
+    {
+        throw new NotImplementedException();
+    }
 }

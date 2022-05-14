@@ -89,7 +89,7 @@ public class GamesRepository : IGamesRepository
     public Task AddGameToUserAsync(Guid userId, Guid gameId, Guid platformId)
     {
         const string query =
-            "INSERT INTO user_game(user_id, game_id, platform_id) VALUES(@UserId, @GameId, @PlatformId)";
+            "INSERT INTO user_game(user_id, game_id, platform_id) VALUES(@UserId, @GameId, @PlatformId) ON CONFLICT (user_id, game_id, platform_id) DO UPDATE SET updated_at = current_timestamp";
         return _connection.ExecuteAsync(query, new { UserId = userId, GameId = gameId, PlatformId = platformId });
     }
 
@@ -98,5 +98,12 @@ public class GamesRepository : IGamesRepository
         const string query =
             "DELETE FROM user_game WHERE user_id = @UserId AND game_id = @GameId AND platform_id = @PlatformId";
         return _connection.ExecuteAsync(query, new { UserId = userId, GameId = gameId, PlatformId = platformId });
+    }
+
+    public Task<IEnumerable<Game>> GetUsersGameAsync()
+    {
+        const string query =
+            "SELECT G.id, G.external_id, G.name FROM games G JOIN user_game UG ON G.id = UG.game_id JOIN users U ON U.id = UG.user_id GROUP BY G.id";
+        return _connection.QueryAsync<Game>(query);
     }
 }

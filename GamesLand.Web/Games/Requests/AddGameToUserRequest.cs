@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using GamesLand.Core.Games.Entities;
+﻿using GamesLand.Core.Games.Entities;
 using GamesLand.Core.Platforms.Entities;
 using GamesLand.Infrastructure.RAWG.Entities;
 
@@ -17,13 +16,9 @@ public record AddGameToUserRequest
         NameOriginal = Game.NameOriginal,
         Description = Game.Description ?? "",
         Rating = Game.Rating,
-        Released = Game.Released != null
-            ? DateTime.ParseExact(Game.Released, "yyyy-MM-dd", CultureInfo.InvariantCulture)
-            : null,
+        Released = Game.Released != null ? DateTime.Parse(Game.Released) : null,
         ToBeAnnounced = Game.Tba,
-        Updated = Game.Updated != null
-            ? DateTime.ParseExact(Game.Released, "yyyy-MM-dd", CultureInfo.InvariantCulture)
-            : null,
+        Updated = Game.Updated != null ? DateTime.Parse(Game.Updated) : null,
         Website = Game.Website,
         RatingsCount = Game.RatingsCount,
         BackgroundImagePath = Game.BackgroundImage,
