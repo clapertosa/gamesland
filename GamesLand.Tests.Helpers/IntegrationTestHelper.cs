@@ -32,7 +32,7 @@ public class IntegrationTestHelper
         Configuration = application.Services.GetRequiredService<IConfiguration>();
         Connection = new NpgsqlConnection()
         {
-            ConnectionString = Configuration["pgConnection"]
+            ConnectionString = Configuration["DATABASE_URL"]
         };
         Client = application.CreateClient();
         ClientAuthorized = application.CreateClient();
