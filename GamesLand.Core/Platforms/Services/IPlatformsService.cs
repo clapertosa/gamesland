@@ -10,5 +10,4 @@ public interface IPlatformsService
     Task<Platform?> GetPlatformByIdAsync(Guid id);
     Task<Platform?> GetPlatformByExternalIdAsync(int id);
     Task DeletePlatformAsync(Guid id);
-    Task SaveGameReleaseDateAsync(Guid gameId, Guid platformId, DateTime? releaseDate);
 }

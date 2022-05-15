@@ -9,7 +9,8 @@ public class Alter_UserGame_Table_Add_Preferred_Platform_And_Email : Migration {
     {
         Alter.Table("user_game")
             .AddColumn("platform_id").AsGuid().NotNullable().ForeignKey("platforms", "id").OnDelete(Rule.Cascade)
-            .AddColumn("notified").AsBoolean().NotNullable().WithDefaultValue(false);
+            .AddColumn("notified").AsBoolean().NotNullable().WithDefaultValue(false)
+            .AddColumn("release_date").AsDate().Nullable();
         Create.UniqueConstraint("IX_user_game_user_id_game_id_platform_id").OnTable("user_game").Columns("user_id","game_id", "platform_id");
     }
 

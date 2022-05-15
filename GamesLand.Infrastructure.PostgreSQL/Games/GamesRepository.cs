@@ -86,11 +86,12 @@ public class GamesRepository : IGamesRepository
         return gamePersistent?.ToGame();
     }
 
-    public Task AddGameToUserAsync(Guid userId, Guid gameId, Guid platformId)
+    public Task SaveUserGameReleaseDateAsync(Guid userId, Guid gameId, Guid platformId, DateTime? releaseDate)
     {
         const string query =
-            "INSERT INTO user_game(user_id, game_id, platform_id) VALUES(@UserId, @GameId, @PlatformId) ON CONFLICT (user_id, game_id, platform_id) DO UPDATE SET updated_at = current_timestamp";
-        return _connection.ExecuteAsync(query, new { UserId = userId, GameId = gameId, PlatformId = platformId });
+            "INSERT INTO user_game(user_id, game_id, platform_id, release_date) VALUES(@UserId, @GameId, @PlatformId, @ReleaseDate) ON CONFLICT (user_id, game_id, platform_id) DO UPDATE SET release_date = @ReleaseDate, updated_at = current_timestamp";
+        return _connection.ExecuteAsync(query,
+            new { UserId = userId, GameId = gameId, PlatformId = platformId, ReleaseDate = releaseDate });
     }
 
     public Task RemoveGameFromUserAsync(Guid userId, Guid gameId, int platformId)

@@ -73,12 +73,4 @@ public class PlatformsRepository : IPlatformsRepository
             await _connection.QueryFirstOrDefaultAsync<PlatformPersistent>(query, new { ExternalId = externalId });
         return platformPersistent?.ToPlatform();
     }
-
-    public async Task SaveGameReleaseDateAsync(Guid gameId, Guid platformId, DateTime? releaseDate)
-    {
-        const string query =
-            "INSERT INTO games_release_date(game_id, platform_id, release_date) VALUES (@GameId, @PlatformId, @ReleaseDate) ON CONFLICT (game_id, platform_id) DO UPDATE SET release_date = @ReleaseDate, updated_at = current_timestamp";
-        await _connection.ExecuteAsync(query,
-            new { GameId = gameId, PlatformId = platformId, ReleaseDate = releaseDate });
-    }
 }

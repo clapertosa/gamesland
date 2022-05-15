@@ -74,9 +74,7 @@ public class GamesService : IGamesService
         Platform platform = platforms.First(x => x.ExternalId == platformId);
 
         DateTime? releaseDate = game.Platforms.First(x => x.ExternalId == platform.ExternalId).GameReleaseDate;
-        await _platformsService.SaveGameReleaseDateAsync(gameRecord.Id, platform.Id, releaseDate);
-
-        await _gamesRepository.AddGameToUserAsync(userRecord.Id, gameRecord.Id, platform.Id);
+        await _gamesRepository.SaveUserGameReleaseDateAsync(userRecord.Id, gameRecord.Id, platform.Id, releaseDate);
     }
 
     public Task<IEnumerable<Game>> GetUsersGamesAsync()

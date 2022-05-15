@@ -78,7 +78,7 @@ public class FakeGamesRepository : IGamesRepository
             : Task.FromResult<Game?>(null);
     }
 
-    public Task AddGameToUserAsync(Guid userId, Guid gameId, Guid platformId)
+    public Task SaveUserGameReleaseDateAsync(Guid userId, Guid gameId, Guid platformId, DateTime? releaseDate)
     {
         return Task.CompletedTask;
     }
