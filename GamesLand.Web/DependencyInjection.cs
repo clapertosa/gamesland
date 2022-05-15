@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
+using GamesLand.Infrastructure.MailSender.Services;
 using GamesLand.Infrastructure.PostgreSQL;
 using GamesLand.Infrastructure.RAWG.Handlers;
 using GamesLand.Infrastructure.RAWG.Services;
@@ -45,6 +46,9 @@ public static class DependencyInjection
         // Authorization
         services.AddAuthorization();
 
+        // Mail
+        services.AddSingleton<IMailService, MailService>();
+        
         // Quartz
         services.AddQuartz(q =>
         {

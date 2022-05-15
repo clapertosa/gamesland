@@ -2,6 +2,8 @@
 using Dapper;
 using GamesLand.Core.Games.Entities;
 using GamesLand.Core.Games.Repositories;
+using GamesLand.Core.Platforms.Entities;
+using GamesLand.Core.Users.Entities;
 
 namespace GamesLand.Infrastructure.PostgreSQL.Games;
 
@@ -101,10 +103,34 @@ public class GamesRepository : IGamesRepository
         return _connection.ExecuteAsync(query, new { UserId = userId, GameId = gameId, PlatformId = platformId });
     }
 
-    public Task<IEnumerable<Game>> GetUsersGameAsync()
+    public Task<IEnumerable<Game>> GetUsersGameGroupedByGameIdAsync()
     {
         const string query =
-            "SELECT G.id, G.external_id, G.name FROM games G JOIN user_game UG ON G.id = UG.game_id JOIN users U ON U.id = UG.user_id GROUP BY G.id";
+            "SELECT G.id, G.external_id, G.name FROM games G JOIN user_game UG ON G.id = UG.game_id JOIN users U ON U.id = UG.user_id WHERE UG.notified = false GROUP BY G.id";
         return _connection.QueryAsync<Game>(query);
+    }
+
+    public Task<IEnumerable<Game>> GetUsersGameGroupedByUserIdAsync()
+    {
+        const string query =
+            @"SELECT 
+            G.id AS game_id, G.name, G.background_image_path, G.website, 
+            U.id AS user_id, U.first_name, U.email, 
+            P.id AS platform_id, P.name, 
+            UG.release_date AS game_release_date
+            FROM games G
+                     JOIN user_game UG ON G.id = UG.game_id
+                     JOIN users U ON U.id = UG.user_id
+                     JOIN platforms P ON P.id = UG.platform_id
+            WHERE UG.notified = FALSE
+              AND UG.release_date < CURRENT_TIMESTAMP
+            GROUP BY G.id, G.name, G.background_image_path, G.website, U.id, P.id, P.name, UG.release_date";
+        return _connection.QueryAsync<Game, User, Platform, Game>(query, (g, u, p) =>
+        {
+            Game game = g;
+            g.User = u;
+            g.Platform = p;
+            return game;
+        }, splitOn: "user_id, platform_id");
     }
 }

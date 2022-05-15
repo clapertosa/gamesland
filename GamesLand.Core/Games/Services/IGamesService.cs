@@ -10,5 +10,6 @@ public interface IGamesService
     Task<Game> UpdateGameAsync(Guid id, Game game);
     Task DeleteGameAsync(Guid id);
     Task AddGameToUserAsync(Guid userId, Game game, int platformId);
-    Task<IEnumerable<Game>> GetUsersGamesAsync();
+    Task<IEnumerable<Game>> GetUsersGameGroupedByGameIdAsync();
+    Task<IEnumerable<Game>> GetUsersGameGroupedByUserIdAsync();
 }

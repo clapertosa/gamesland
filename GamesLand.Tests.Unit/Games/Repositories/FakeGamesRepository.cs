@@ -88,8 +88,13 @@ public class FakeGamesRepository : IGamesRepository
         return Task.CompletedTask;
     }
 
-    public async Task<IEnumerable<Game>> GetUsersGameAsync()
+    public async Task<IEnumerable<Game>> GetUsersGameGroupedByGameIdAsync()
     {
-        throw new NotImplementedException();
+        return await Task.FromResult(new[] { new Game() });
+    }
+
+    public async Task<IEnumerable<Game>> GetUsersGameGroupedByUserIdAsync()
+    {
+        return await Task.FromResult(new[] { new Game() });
     }
 }

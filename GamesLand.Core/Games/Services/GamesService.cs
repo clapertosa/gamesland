@@ -77,8 +77,13 @@ public class GamesService : IGamesService
         await _gamesRepository.SaveUserGameReleaseDateAsync(userRecord.Id, gameRecord.Id, platform.Id, releaseDate);
     }
 
-    public Task<IEnumerable<Game>> GetUsersGamesAsync()
+    public Task<IEnumerable<Game>> GetUsersGameGroupedByGameIdAsync()
     {
-        return _gamesRepository.GetUsersGameAsync();
+        return _gamesRepository.GetUsersGameGroupedByGameIdAsync();
+    }
+
+    public Task<IEnumerable<Game>> GetUsersGameGroupedByUserIdAsync()
+    {
+        return _gamesRepository.GetUsersGameGroupedByUserIdAsync();
     }
 }

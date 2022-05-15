@@ -1,4 +1,5 @@
 ﻿using GamesLand.Core.Platforms.Entities;
+using GamesLand.Core.Users.Entities;
 
 namespace GamesLand.Core.Games.Entities;
 
@@ -17,4 +18,6 @@ public record Game : BaseEntity<Guid>
     public double? Rating { get; set; }
     public int? RatingsCount { get; set; }
     public IEnumerable<Platform>? Platforms { get; set; }
+    public Platform Platform { get; set; }
+    public User User { get; set; }
 }
