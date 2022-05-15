@@ -23,13 +23,14 @@ public static class DependencyInjection
     {
         services.AddFluentMigratorCore().ConfigureRunner(rb =>
                 rb.AddPostgres()
-                    .WithGlobalConnectionString(configuration["DATABASE_URL"])
+                    .WithGlobalConnectionString(DatabaseUtils.GetDatabaseUrlFormatted(configuration["DATABASE_URL"]))
                     .ScanIn(typeof(CreateUuidPgExtension).Assembly).For.Migrations())
             .BuildServiceProvider();
 
         // PostgreSQL
         DefaultTypeMap.MatchNamesWithUnderscores = true;
-        services.AddTransient<IDbConnection>(_ => new NpgsqlConnection(configuration["DATABASE_URL"]));
+        services.AddTransient<IDbConnection>(_ =>
+            new NpgsqlConnection(DatabaseUtils.GetDatabaseUrlFormatted(configuration["DATABASE_URL"])));
 
         // Services
         services.AddSingleton<IUserAuthentication, UserAuthentication>();

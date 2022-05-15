@@ -3,6 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Dapper;
+using GamesLand.Infrastructure.PostgreSQL;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +33,7 @@ public class IntegrationTestHelper
         Configuration = application.Services.GetRequiredService<IConfiguration>();
         Connection = new NpgsqlConnection()
         {
-            ConnectionString = Configuration["DATABASE_URL"]
+            ConnectionString = DatabaseUtils.GetDatabaseUrlFormatted(Configuration["DATABASE_URL"])
         };
         Client = application.CreateClient();
         ClientAuthorized = application.CreateClient();
