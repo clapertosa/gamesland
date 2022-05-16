@@ -48,19 +48,24 @@ public static class DependencyInjection
 
         // Mail
         services.AddSingleton<IMailService, MailService>();
-        
+
         // Quartz
         services.AddQuartz(q =>
         {
-            JobKey sendReleasedGamesMailJobKey = new JobKey("SendReleasedGamesMailJob");
             q.UseMicrosoftDependencyInjectionJobFactory();
-
+            JobKey sendReleasedGamesMailJobKey = new JobKey("SendReleasedGamesMailJob");
             q.AddJob<SendReleasedGamesMailJob>(config => config
                 .WithIdentity(sendReleasedGamesMailJobKey));
-
             q.AddTrigger(config => config
                 .ForJob(sendReleasedGamesMailJobKey)
                 .WithCronSchedule("0 0 0 * * ?"));
+
+            JobKey deleteNotifiedGamesJobKey = new JobKey("DeleteNotifiedGamesJob");
+            q.AddJob<DeleteNotifiedGamesJob>(config => config
+                .WithIdentity(deleteNotifiedGamesJobKey));
+            q.AddTrigger(config => config
+                .ForJob(deleteNotifiedGamesJobKey)
+                .WithCronSchedule("0 0 1 * * ?"));
         });
         services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 

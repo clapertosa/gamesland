@@ -86,4 +86,14 @@ public class GamesService : IGamesService
     {
         return _gamesRepository.GetReleasedUsersGameGroupedByUserIdAsync();
     }
+
+    public Task ChangeReleasedGameStatusAsync(Guid userId, Guid gameId, Guid platformId, bool status)
+    {
+        return _gamesRepository.ChangeReleasedGameStatusAsync(userId, gameId, platformId, status);
+    }
+
+    public Task DeleteNotifiedGamesAsync()
+    {
+        return _gamesRepository.DeleteNotifiedGamesAsync();
+    }
 }

@@ -1,12 +1,12 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/Highlighting/HighlightingSourceSnapshotLocation/@EntryValue">C:\Users\Claudio\AppData\Local\JetBrains\Rider2022.1\resharper-host\temp\Rider\vAny\CoverageData\_GamesLand.-1927029220\Snapshot\snapshot.utdcvr</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=52b9947e_002Dc6a2_002D4114_002Da2f1_002D85290ee95ac9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Add_Game_To_User" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=52b9947e_002Dc6a2_002D4114_002Da2f1_002D85290ee95ac9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Add_Game_To_User" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Or&gt;&#xD;
     &lt;Project Location="F:\C#\GamesLand\GamesLand.Tests.Unit" Presentation="&amp;lt;GamesLand.Tests.Unit&amp;gt;" /&gt;&#xD;
     &lt;Project Location="F:\C#\GamesLand\GamesLand.Tests.Integration" Presentation="&amp;lt;GamesLand.Tests.Integration&amp;gt;" /&gt;&#xD;
     &lt;Project Location="F:\C#\GamesLand\GamesLand.Tests.E2E" Presentation="&amp;lt;GamesLand.Tests.E2E&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bb93dbb9_002D19d7_002D4ef0_002D884c_002D70b750b3beb8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Hashes_Password_Matches" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=bb93dbb9_002D19d7_002D4ef0_002D884c_002D70b750b3beb8/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Hashes_Password_Matches" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

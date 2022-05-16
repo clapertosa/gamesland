@@ -32,9 +32,8 @@ public class SendReleasedGamesMailJob : IJob
 
         IEnumerable<Game> usersGames = await _gamesService.GetReleasedUsersGameGroupedByUserIdAsync();
 
-        foreach (Game g in usersGames)
-        {
-            await _mailService.SendGameReleasedMailAsync(g);
-        }
+        await Task.WhenAll(usersGames.Select(x => _mailService.SendGameReleasedMailAsync(x)));
+        await Task.WhenAll(usersGames.Select(x =>
+            _gamesService.ChangeReleasedGameStatusAsync(x.User.Id, x.Id, x.Platform.Id, true)));
     }
 }

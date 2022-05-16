@@ -97,4 +97,14 @@ public class FakeGamesRepository : IGamesRepository
     {
         return await Task.FromResult(new[] { new Game() });
     }
+
+    public async Task ChangeReleasedGameStatusAsync(Guid userId, Guid gameId, Guid platformId, bool status)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task DeleteNotifiedGamesAsync()
+    {
+        throw new NotImplementedException();
+    }
 }

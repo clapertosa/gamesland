@@ -66,6 +66,9 @@ public class GameServiceTests : IntegrationTestBase
         IEnumerable<Game> res = await _gamesService.GetReleasedUsersGameGroupedByUserIdAsync();
         Game record = res.First();
 
+        Assert.NotEqual(Guid.Empty, record.Id);
+        Assert.NotEqual(Guid.Empty, record.User.Id);
+        Assert.NotEqual(Guid.Empty, record.Platform.Id);
         Assert.Equal(game.Name, record.Name);
         Assert.Equal(user.FirstName, record.User.FirstName);
         Assert.Equal(user.Email, record.User.Email);

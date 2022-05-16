@@ -117,7 +117,7 @@ public class GamesRepository : IGamesRepository
             @"SELECT 
             G.id AS game_id, G.name, G.background_image_path, G.website, 
             U.id AS user_id, U.first_name, U.email, 
-            P.id AS platform_id, P.name, 
+            P.id AS platform_id, P.name AS platform_name, 
             UG.release_date AS game_release_date
             FROM games G
                      JOIN user_game UG ON G.id = UG.game_id
@@ -126,12 +126,39 @@ public class GamesRepository : IGamesRepository
             WHERE UG.notified = FALSE
               AND UG.release_date <= CURRENT_TIMESTAMP
             GROUP BY G.id, G.name, G.background_image_path, G.website, U.id, P.id, P.name, UG.release_date";
-        return _connection.QueryAsync<Game, User, Platform, Game>(query, (g, u, p) =>
+        return _connection.QueryAsync<dynamic, dynamic, dynamic, Game>(query, (g, u, p) => new Game()
         {
-            Game game = g;
-            g.User = u;
-            g.Platform = p;
-            return game;
+            Id = g.game_id,
+            Name = g.name,
+            BackgroundImagePath = g.background_image_path,
+            Website = g.website,
+            User = new User()
+            {
+                Id = u.user_id,
+                FirstName = u.first_name,
+                Email = u.email
+            },
+            Platform = new Platform()
+            {
+                Id = p.platform_id,
+                Name = p.platform_name,
+                GameReleaseDate = p.game_release_date
+            }
         }, splitOn: "user_id, platform_id");
+    }
+
+    public Task ChangeReleasedGameStatusAsync(Guid userId, Guid gameId, Guid platformId, bool status)
+    {
+        const string query = @"UPDATE user_game 
+                            SET notified = @Status, updated_at = current_timestamp
+                            WHERE user_id = @UserId AND game_id = @GameId AND platform_id = @PlatformId";
+        return _connection.ExecuteAsync(query,
+            new { Status = status, UserId = userId, GameId = gameId, PlatformId = platformId });
+    }
+
+    public Task DeleteNotifiedGamesAsync()
+    {
+        const string query = "DELETE FROM user_game WHERE notified = true";
+        return _connection.ExecuteAsync(query);
     }
 }
