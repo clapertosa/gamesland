@@ -63,7 +63,7 @@ public class GameServiceTests : IntegrationTestBase
             $"INSERT INTO games(external_id, name, to_be_announced, updated, website) VALUES({game.ExternalId}, '{game.Name}', true, current_timestamp, '{game.Website}') RETURNING *");
         await Connection.ExecuteAsync(
             $"INSERT INTO user_game(user_id, game_id, platform_id, notified, release_date) VALUES('{userRecord.Id}', '{gameRecord.Id}', '{platformRecord.Id}', false, TO_DATE('{date}', 'DD/MM/YYYY'))");
-        IEnumerable<Game> res = await _gamesService.GetUsersGameGroupedByUserIdAsync();
+        IEnumerable<Game> res = await _gamesService.GetReleasedUsersGameGroupedByUserIdAsync();
         Game record = res.First();
 
         Assert.Equal(game.Name, record.Name);

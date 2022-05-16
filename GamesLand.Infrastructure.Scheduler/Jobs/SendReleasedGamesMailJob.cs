@@ -30,7 +30,7 @@ public class SendReleasedGamesMailJob : IJob
             await _gamesService.UpdateGameAsync(g.Id, game.ToGame());
         }
 
-        IEnumerable<Game> usersGames = await _gamesService.GetUsersGameGroupedByUserIdAsync();
+        IEnumerable<Game> usersGames = await _gamesService.GetReleasedUsersGameGroupedByUserIdAsync();
 
         foreach (Game g in usersGames)
         {

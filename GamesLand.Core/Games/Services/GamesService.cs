@@ -82,8 +82,8 @@ public class GamesService : IGamesService
         return _gamesRepository.GetUsersGameGroupedByGameIdAsync();
     }
 
-    public Task<IEnumerable<Game>> GetUsersGameGroupedByUserIdAsync()
+    public Task<IEnumerable<Game>> GetReleasedUsersGameGroupedByUserIdAsync()
     {
-        return _gamesRepository.GetUsersGameGroupedByUserIdAsync();
+        return _gamesRepository.GetReleasedUsersGameGroupedByUserIdAsync();
     }
 }

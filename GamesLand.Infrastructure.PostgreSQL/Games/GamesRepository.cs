@@ -111,7 +111,7 @@ public class GamesRepository : IGamesRepository
         return gamePersistent.Select(x => x.ToGame());
     }
 
-    public Task<IEnumerable<Game>> GetUsersGameGroupedByUserIdAsync()
+    public Task<IEnumerable<Game>> GetReleasedUsersGameGroupedByUserIdAsync()
     {
         const string query =
             @"SELECT 
