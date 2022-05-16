@@ -103,11 +103,12 @@ public class GamesRepository : IGamesRepository
         return _connection.ExecuteAsync(query, new { UserId = userId, GameId = gameId, PlatformId = platformId });
     }
 
-    public Task<IEnumerable<Game>> GetUsersGameGroupedByGameIdAsync()
+    public async Task<IEnumerable<Game>> GetUsersGameGroupedByGameIdAsync()
     {
         const string query =
             "SELECT G.id, G.external_id, G.name FROM games G JOIN user_game UG ON G.id = UG.game_id JOIN users U ON U.id = UG.user_id WHERE UG.notified = false GROUP BY G.id";
-        return _connection.QueryAsync<Game>(query);
+        IEnumerable<GamePersistent> gamePersistent = await _connection.QueryAsync<GamePersistent>(query);
+        return gamePersistent.Select(x => x.ToGame());
     }
 
     public Task<IEnumerable<Game>> GetUsersGameGroupedByUserIdAsync()
@@ -123,7 +124,7 @@ public class GamesRepository : IGamesRepository
                      JOIN users U ON U.id = UG.user_id
                      JOIN platforms P ON P.id = UG.platform_id
             WHERE UG.notified = FALSE
-              AND UG.release_date < CURRENT_TIMESTAMP
+              AND UG.release_date <= CURRENT_TIMESTAMP
             GROUP BY G.id, G.name, G.background_image_path, G.website, U.id, P.id, P.name, UG.release_date";
         return _connection.QueryAsync<Game, User, Platform, Game>(query, (g, u, p) =>
         {
