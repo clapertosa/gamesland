@@ -2,10 +2,7 @@ using FluentMigrator.Runner;
 using GamesLand.Web;
 using GamesLand.Web.Middlewares;
 
-int envPort = Convert.ToInt32(Environment.GetEnvironmentVariable("PORT"));
-int port = envPort != 0 ? envPort : 5000;
 var builder = WebApplication.CreateBuilder(args);
-builder.WebHost.ConfigureKestrel(options => options.ListenLocalhost(port));
 var configuration = builder.Configuration;
 var services = builder.Services;
 
