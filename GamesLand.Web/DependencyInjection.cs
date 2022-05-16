@@ -58,14 +58,14 @@ public static class DependencyInjection
                 .WithIdentity(sendReleasedGamesMailJobKey));
             q.AddTrigger(config => config
                 .ForJob(sendReleasedGamesMailJobKey)
-                .WithCronSchedule("0 0 0 * * ?"));
+                .WithCronSchedule("0 0 0 * * ?")); // 00 AM
 
             JobKey deleteNotifiedGamesJobKey = new JobKey("DeleteNotifiedGamesJob");
             q.AddJob<DeleteNotifiedGamesJob>(config => config
                 .WithIdentity(deleteNotifiedGamesJobKey));
             q.AddTrigger(config => config
                 .ForJob(deleteNotifiedGamesJobKey)
-                .WithCronSchedule("0 0 1 * * ?"));
+                .WithCronSchedule("0 0 1 * * ?")); // 01 AM
         });
         services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
