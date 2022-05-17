@@ -123,7 +123,7 @@ public class GamesRepository : IGamesRepository
                      JOIN user_game UG ON G.id = UG.game_id
                      JOIN users U ON U.id = UG.user_id
                      JOIN platforms P ON P.id = UG.platform_id
-            WHERE UG.notified = FALSE
+            WHERE UG.notified = FALSE AND to_be_announced = FALSE
               AND UG.release_date <= CURRENT_TIMESTAMP
             GROUP BY G.id, G.name, G.background_image_path, G.website, U.id, P.id, P.name, UG.release_date";
         return _connection.QueryAsync<dynamic, dynamic, dynamic, Game>(query, (g, u, p) => new Game()
