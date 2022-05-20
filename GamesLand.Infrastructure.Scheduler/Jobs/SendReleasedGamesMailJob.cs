@@ -26,8 +26,8 @@ public class SendReleasedGamesMailJob : IJob
         IEnumerable<Game> games = await _gamesService.GetUsersGameGroupedByGameIdAsync();
         foreach (Game g in games)
         {
-            RawgGame? game = await _rawgService.GetGame(g.ExternalId);
-            await _gamesService.UpdateGameAsync(g.Id, game.ToGame());
+            // RawgGame? game = await _rawgService.GetGame(g.ExternalId);
+            // await _gamesService.UpdateGameAsync(g.Id, game.ToGame());
         }
 
         IEnumerable<Game> usersGames = await _gamesService.GetReleasedUsersGameGroupedByUserIdAsync();

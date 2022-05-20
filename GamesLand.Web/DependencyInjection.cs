@@ -50,6 +50,7 @@ public static class DependencyInjection
         services.AddSingleton<IMailService, MailService>();
 
         // Quartz
+        // 5 seconds: 0/5 * * * * ?
         services.AddQuartz(q =>
         {
             q.UseMicrosoftDependencyInjectionJobFactory();
@@ -58,14 +59,16 @@ public static class DependencyInjection
                 .WithIdentity(sendReleasedGamesMailJobKey));
             q.AddTrigger(config => config
                 .ForJob(sendReleasedGamesMailJobKey)
-                .WithCronSchedule("0 0 0 * * ?")); // 00 AM
+                .WithCronSchedule("0/5 * * * * ?",
+                    x => x.InTimeZone(TimeZoneInfo.FindSystemTimeZoneById("EST")))); // 00 AM GMT
 
             JobKey deleteNotifiedGamesJobKey = new JobKey("DeleteNotifiedGamesJob");
             q.AddJob<DeleteNotifiedGamesJob>(config => config
                 .WithIdentity(deleteNotifiedGamesJobKey));
             q.AddTrigger(config => config
                 .ForJob(deleteNotifiedGamesJobKey)
-                .WithCronSchedule("0 0 1 * * ?")); // 01 AM
+                .WithCronSchedule("0 0 1 * * ?",
+                    x => x.InTimeZone(TimeZoneInfo.FindSystemTimeZoneById("EST")))); // 01 AM GMT
         });
         services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 

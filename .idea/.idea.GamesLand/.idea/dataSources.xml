@@ -15,5 +15,12 @@
       <jdbc-url>jdbc:postgresql://localhost:5431/gamesland-test</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="PROD" uuid="7f14cd11-44f9-449c-8095-19091ee93e7c">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://ec2-34-247-72-29.eu-west-1.compute.amazonaws.com:5432/dfkvqs8hreqnl7</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
