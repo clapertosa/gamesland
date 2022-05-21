@@ -59,7 +59,7 @@ public static class DependencyInjection
                 .WithIdentity(sendReleasedGamesMailJobKey));
             q.AddTrigger(config => config
                 .ForJob(sendReleasedGamesMailJobKey)
-                .WithCronSchedule("0/5 * * * * ?",
+                .WithCronSchedule("0 0 0 * * ?",
                     x => x.InTimeZone(TimeZoneInfo.FindSystemTimeZoneById("EST")))); // 00 AM GMT
 
             JobKey deleteNotifiedGamesJobKey = new JobKey("DeleteNotifiedGamesJob");
