@@ -1,5 +1,4 @@
-﻿using GamesLand.Core.Users;
-using GamesLand.Core.Users.Entities;
+﻿using GamesLand.Core.Users.Entities;
 
 namespace GamesLand.Web.Users.Requests;
 
@@ -9,6 +8,7 @@ public record SignUpUserRequest
     public string? LastName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public long TelegramChatId { get; set; }
 
     public User ToUser()
     {
@@ -17,7 +17,8 @@ public record SignUpUserRequest
             FirstName = FirstName,
             LastName = LastName,
             Email = Email,
-            Password = Password
+            Password = Password,
+            TelegramChatId = TelegramChatId
         };
     }
 }

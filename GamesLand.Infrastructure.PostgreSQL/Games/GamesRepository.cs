@@ -20,7 +20,7 @@ public class GamesRepository : IGamesRepository
     {
         const string query =
             "INSERT INTO games(external_id, name, name_original, description, to_be_announced, background_image_path, background_image_additional_path, website, released, updated, rating, ratings_count) VALUES(@ExternalId, @Name, @NameOriginal, @Description, @ToBeAnnounced, @BackgroundImagePath, @BackgroundImageAdditionalPath, @Website, @Released, @Updated, @Rating, @RatingsCount) ON CONFLICT(external_id) DO UPDATE SET name = @Name, name_original = @NameOriginal, description = @Description, to_be_announced = @ToBeAnnounced, background_image_path = @BackgroundImagePath, background_image_additional_path = @BackgroundImageAdditionalPath, website = @Website, released = @Released, updated = @Updated, rating = @Rating, ratings_count = @RatingsCount RETURNING *";
-        GamePersistent gamePersistent = await _connection.QuerySingleAsync<GamePersistent>(query, new
+        var gamePersistent = await _connection.QuerySingleAsync<GamePersistent>(query, new
         {
             entity.ExternalId,
             entity.Name,
@@ -42,7 +42,7 @@ public class GamesRepository : IGamesRepository
     public async Task<Game?> GetByIdAsync(Guid id)
     {
         const string query = "SELECT * FROM games WHERE id = @Id";
-        GamePersistent gamePersistent =
+        var gamePersistent =
             await _connection.QueryFirstOrDefaultAsync<GamePersistent>(query, new { Id = id });
         return gamePersistent?.ToGame();
     }
@@ -56,7 +56,7 @@ public class GamesRepository : IGamesRepository
     {
         const string query =
             "UPDATE games SET name = @Name, name_original = @NameOriginal, description = @Description, to_be_announced = @ToBeAnnounced, background_image_path = @BackgroundImagePath, background_image_additional_path = @BackgroundImageAdditionalPath, website = @Website, released = @Released, updated = @Updated, updated_at = current_timestamp, rating = @Rating, ratings_count = @RatingsCount WHERE id = @Id RETURNING *";
-        GamePersistent gamePersistent = await _connection.QueryFirstAsync<GamePersistent>(query, new
+        var gamePersistent = await _connection.QueryFirstAsync<GamePersistent>(query, new
         {
             Id = id,
             entity.Name,
@@ -83,7 +83,7 @@ public class GamesRepository : IGamesRepository
     public async Task<Game?> GetByExternalIdAsync(int externalId)
     {
         const string query = "SELECT * FROM games WHERE external_id = @ExternalId";
-        GamePersistent gamePersistent =
+        var gamePersistent =
             await _connection.QueryFirstOrDefaultAsync<GamePersistent>(query, new { ExternalId = externalId });
         return gamePersistent?.ToGame();
     }
@@ -107,7 +107,7 @@ public class GamesRepository : IGamesRepository
     {
         const string query =
             "SELECT G.id, G.external_id, G.name FROM games G JOIN user_game UG ON G.id = UG.game_id JOIN users U ON U.id = UG.user_id WHERE UG.notified = false GROUP BY G.id";
-        IEnumerable<GamePersistent> gamePersistent = await _connection.QueryAsync<GamePersistent>(query);
+        var gamePersistent = await _connection.QueryAsync<GamePersistent>(query);
         return gamePersistent.Select(x => x.ToGame());
     }
 
@@ -116,7 +116,7 @@ public class GamesRepository : IGamesRepository
         const string query =
             @"SELECT 
             G.id AS game_id, G.name, G.background_image_path, G.website, 
-            U.id AS user_id, U.first_name, U.email, 
+            U.id AS user_id, U.first_name, U.email, U.telegram_chat_id, 
             P.id AS platform_id, P.name AS platform_name, 
             UG.release_date AS game_release_date
             FROM games G
@@ -126,19 +126,20 @@ public class GamesRepository : IGamesRepository
             WHERE UG.notified = FALSE AND to_be_announced = FALSE
               AND UG.release_date <= CURRENT_TIMESTAMP
             GROUP BY G.id, G.name, G.background_image_path, G.website, U.id, P.id, P.name, UG.release_date";
-        return _connection.QueryAsync<dynamic, dynamic, dynamic, Game>(query, (g, u, p) => new Game()
+        return _connection.QueryAsync<dynamic, dynamic, dynamic, Game>(query, (g, u, p) => new Game
         {
             Id = g.game_id,
             Name = g.name,
             BackgroundImagePath = g.background_image_path,
             Website = g.website,
-            User = new User()
+            User = new User
             {
                 Id = u.user_id,
                 FirstName = u.first_name,
-                Email = u.email
+                Email = u.email,
+                TelegramChatId = u.telegram_chat_id
             },
-            Platform = new Platform()
+            Platform = new Platform
             {
                 Id = p.platform_id,
                 Name = p.platform_name,

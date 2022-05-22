@@ -7,8 +7,8 @@ namespace GamesLand.Core.Users.Services;
 
 public class UsersService : IUsersService
 {
-    private readonly IUsersRepository _usersRepository;
     private readonly IUserAuthentication _userAuthentication;
+    private readonly IUsersRepository _usersRepository;
 
     public UsersService(IUsersRepository usersRepository, IUserAuthentication userAuthentication)
     {
@@ -18,16 +18,16 @@ public class UsersService : IUsersService
 
     public async Task<User> SignUpUserAsync(User user)
     {
-        User? userRecord = await _usersRepository.GetByEmailAsync(user.Email);
+        var userRecord = await _usersRepository.GetByEmailAsync(user.Email);
         if (userRecord != null)
             throw new RestException(HttpStatusCode.Conflict, new { Meesage = "Email already registered." });
-        string hashedPassword = _userAuthentication.Hash(user.Password);
+        var hashedPassword = _userAuthentication.Hash(user.Password);
         return await _usersRepository.CreateAsync(user, hashedPassword);
     }
 
     public async Task<string> SignInUserAsync(User user)
     {
-        User? userRecord = await _usersRepository.GetByEmailAsync(user.Email);
+        var userRecord = await _usersRepository.GetByEmailAsync(user.Email);
 
         if (userRecord == null || !_userAuthentication.Match(user.Password, userRecord.Password))
             throw new RestException(HttpStatusCode.Forbidden, new { Message = "Email or Password wrong." });
@@ -37,14 +37,14 @@ public class UsersService : IUsersService
 
     public async Task<User?> GetUserByIdAsync(Guid id)
     {
-        User? userRecord = await _usersRepository.GetByIdAsync(id);
+        var userRecord = await _usersRepository.GetByIdAsync(id);
         if (userRecord == null) throw new RestException(HttpStatusCode.NotFound, new { Message = "User not found." });
         return userRecord;
     }
 
     public async Task<User?> GetUserByEmailAsync(string email)
     {
-        User? userRecord = await _usersRepository.GetByEmailAsync(email);
+        var userRecord = await _usersRepository.GetByEmailAsync(email);
         if (userRecord == null) throw new RestException(HttpStatusCode.NotFound, new { Message = "User not found." });
         return userRecord;
     }
@@ -56,14 +56,14 @@ public class UsersService : IUsersService
 
     public async Task<User> UpdateUserAsync(Guid id, User entity)
     {
-        User? userRecord = await _usersRepository.GetByIdAsync(id);
+        var userRecord = await _usersRepository.GetByIdAsync(id);
         if (userRecord == null) throw new RestException(HttpStatusCode.NotFound, new { Message = "User not found." });
         return await _usersRepository.UpdateAsync(id, entity);
     }
 
     public async Task DeleteUserAsync(Guid id)
     {
-        User? userRecord = await _usersRepository.GetByIdAsync(id);
+        var userRecord = await _usersRepository.GetByIdAsync(id);
         if (userRecord == null) throw new RestException(HttpStatusCode.NotFound, new { Message = "User not found." });
         await _usersRepository.DeleteAsync(id);
     }

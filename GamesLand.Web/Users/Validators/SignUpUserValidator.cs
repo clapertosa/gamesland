@@ -9,5 +9,6 @@ public class SignUpUserValidator : AbstractValidator<SignUpUserRequest>
     {
         RuleFor(x => x.Email).EmailAddress().NotNull();
         RuleFor(x => x.Password).MinimumLength(8).NotNull();
+        RuleFor(x => x.TelegramChatId).NotEmpty();
     }
 }

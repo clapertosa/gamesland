@@ -23,8 +23,8 @@ public class PlatformsRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Create_Platform_With_Valid_Data()
     {
-        Platform platform = new PlatformBuilder().WithExternalId(123).WithName("PC").Build();
-        Platform platformRecord = await _platformsRepository.CreateAsync(platform);
+        var platform = new PlatformBuilder().WithExternalId(123).WithName("PC").Build();
+        var platformRecord = await _platformsRepository.CreateAsync(platform);
 
         Assert.Equal(platform.Name, platformRecord.Name);
         Assert.Equal(platform.ExternalId, platformRecord.ExternalId);
@@ -39,10 +39,10 @@ public class PlatformsRepositoryTests : IntegrationTestBase
             new PlatformBuilder().WithExternalId(100).WithName("PSX").Build(),
             new PlatformBuilder().WithExternalId(10).WithName("PS10").Build()
         };
-        
+
         await _platformsRepository.CreateMultipleAsync(platforms);
         const string query = "SELECT COUNT(id) FROM platforms";
-        int platformsNumber = await Connection.QueryFirstAsync<int>(query);
+        var platformsNumber = await Connection.QueryFirstAsync<int>(query);
 
         Assert.Equal(platforms.Count(), platformsNumber);
     }
@@ -50,32 +50,32 @@ public class PlatformsRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Get_Platform_By_Id()
     {
-        Platform platform = new PlatformBuilder().WithExternalId(123).WithName("PC").Build();
-        Platform platformRecord = await _platformsRepository.CreateAsync(platform);
-        Platform? platformRetrieved = await _platformsRepository.GetByIdAsync(platformRecord.Id);
-        
+        var platform = new PlatformBuilder().WithExternalId(123).WithName("PC").Build();
+        var platformRecord = await _platformsRepository.CreateAsync(platform);
+        var platformRetrieved = await _platformsRepository.GetByIdAsync(platformRecord.Id);
+
         Assert.NotNull(platformRetrieved);
     }
-    
+
     [Fact]
     public async Task Get_Platform_By_ExternalId()
     {
-        Platform platform = new PlatformBuilder().WithExternalId(123).WithName("PC").Build();
-        Platform platformRecord = await _platformsRepository.CreateAsync(platform);
-        Platform? platformRetrieved = await _platformsRepository.GetByExternalIdAsync(platformRecord.ExternalId);
-        
+        var platform = new PlatformBuilder().WithExternalId(123).WithName("PC").Build();
+        var platformRecord = await _platformsRepository.CreateAsync(platform);
+        var platformRetrieved = await _platformsRepository.GetByExternalIdAsync(platformRecord.ExternalId);
+
         Assert.NotNull(platformRetrieved);
     }
 
     [Fact]
     public async Task Update_Platform()
     {
-        Platform platform = new PlatformBuilder().WithExternalId(123).WithName("PC").Build();
-        Platform platformRecord = await _platformsRepository.CreateAsync(platform);
-        string newName = "PSX";
+        var platform = new PlatformBuilder().WithExternalId(123).WithName("PC").Build();
+        var platformRecord = await _platformsRepository.CreateAsync(platform);
+        var newName = "PSX";
         platform.Name = newName;
-        Platform updatedRecord = await _platformsRepository.UpdateAsync(platformRecord.Id, platform);
-        
+        var updatedRecord = await _platformsRepository.UpdateAsync(platformRecord.Id, platform);
+
         Assert.Equal(newName, updatedRecord.Name);
         Assert.Equal(platformRecord.ExternalId, updatedRecord.ExternalId);
     }
@@ -83,10 +83,10 @@ public class PlatformsRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Delete_Platform()
     {
-        Platform platform = new PlatformBuilder().WithExternalId(123).WithName("PC").Build();
-        Platform platformRecord = await _platformsRepository.CreateAsync(platform);
+        var platform = new PlatformBuilder().WithExternalId(123).WithName("PC").Build();
+        var platformRecord = await _platformsRepository.CreateAsync(platform);
         await _platformsRepository.DeleteAsync(platformRecord.Id);
-        Platform? deletedRecord = await _platformsRepository.GetByIdAsync(platformRecord.Id);
+        var deletedRecord = await _platformsRepository.GetByIdAsync(platformRecord.Id);
 
         Assert.Null(deletedRecord);
     }

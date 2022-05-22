@@ -14,20 +14,6 @@ public class FakeUsersRepository : IUsersRepository
     public static string RegisteredEmail => "registered@registered.com";
     public static Guid RegisteredId => Guid.Parse("a2ffb9ab-81ef-4713-a572-1185487d0b3d");
 
-    private User GetUser(User entity)
-    {
-        return new User()
-        {
-            Id = Guid.NewGuid(),
-            Email = entity.Email,
-            Password = entity.Password,
-            FirstName = entity.FirstName,
-            LastName = entity.LastName,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
-        };
-    }
-
     public Task<User> CreateAsync(User entity)
     {
         return Task.FromResult(GetUser(entity))!;
@@ -36,17 +22,14 @@ public class FakeUsersRepository : IUsersRepository
     public Task<User?> GetByIdAsync(Guid id)
     {
         return id == RegisteredId
-            ? Task.FromResult<User?>(GetUser(new User() { Id = RegisteredId }))
+            ? Task.FromResult<User?>(GetUser(new User { Id = RegisteredId }))
             : Task.FromResult<User?>(null);
     }
 
     public async Task<IEnumerable<User>> GetAllAsync(int page, int pageSize)
     {
         IEnumerable<Task<User>> users = new List<Task<User>>();
-        for (int i = 0; i < pageSize; i++)
-        {
-            users.Append(Task.FromResult(GetUser(new User())));
-        }
+        for (var i = 0; i < pageSize; i++) users.Append(Task.FromResult(GetUser(new User())));
 
         return await Task.WhenAll(users);
     }
@@ -65,12 +48,14 @@ public class FakeUsersRepository : IUsersRepository
 
     public Task<User?> GetByEmailAsync(string email)
     {
-        return email == RegisteredEmail ? Task.FromResult<User?>(GetUser(new User() {Email = RegisteredEmail})) : Task.FromResult((User?)null);
+        return email == RegisteredEmail
+            ? Task.FromResult<User?>(GetUser(new User { Email = RegisteredEmail }))
+            : Task.FromResult((User?)null);
     }
 
     public Task<User> CreateAsync(User entity, string hashedPassword)
     {
-        return Task.FromResult(GetUser(new User()
+        return Task.FromResult(GetUser(new User
         {
             Id = Guid.NewGuid(),
             Email = entity.Email,
@@ -80,5 +65,19 @@ public class FakeUsersRepository : IUsersRepository
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         }));
+    }
+
+    private User GetUser(User entity)
+    {
+        return new User
+        {
+            Id = Guid.NewGuid(),
+            Email = entity.Email,
+            Password = entity.Password,
+            FirstName = entity.FirstName,
+            LastName = entity.LastName,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        };
     }
 }

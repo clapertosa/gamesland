@@ -16,8 +16,8 @@ public class UserPasswordServiceTests
     [Fact]
     public void Hashed_Password_Matching()
     {
-        string password = "password";
-        string hashedPassword = _userAuthentication.Hash(password);
+        var password = "password";
+        var hashedPassword = _userAuthentication.Hash(password);
 
         Assert.True(_userAuthentication.Match(password, hashedPassword));
     }
@@ -25,9 +25,9 @@ public class UserPasswordServiceTests
     [Fact]
     public void Hashed_Password_Not_Matching()
     {
-        string password = "password";
-        string wrongPassword = "Password";
-        string hashedPassword = _userAuthentication.Hash(password);
+        var password = "password";
+        var wrongPassword = "Password";
+        var hashedPassword = _userAuthentication.Hash(password);
 
         Assert.False(_userAuthentication.Match(wrongPassword, hashedPassword));
     }

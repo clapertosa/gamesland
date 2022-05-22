@@ -14,20 +14,9 @@ public class FakePlatformsRepository : IPlatformsRepository
     public static Guid RegisteredId => Guid.Parse("3ac9ffce-071a-4b9d-aa5d-c02ad2df8fe2");
     public static int RegisteredExternalId => 4321;
 
-    private Platform GetPlatform(Platform platform) => new Platform()
-    {
-        Id = platform.Id,
-        Name = platform.Name,
-        ExternalId = platform.ExternalId,
-        GameRequirements = platform.GameRequirements,
-        GameReleaseDate = platform.GameReleaseDate,
-        CreatedAt = platform.CreatedAt,
-        UpdatedAt = platform.UpdatedAt
-    };
-
     public Task<Platform> CreateAsync(Platform entity)
     {
-        return Task.FromResult(GetPlatform(new Platform()
+        return Task.FromResult(GetPlatform(new Platform
         {
             Id = Guid.NewGuid(),
             Name = entity.Name,
@@ -38,17 +27,14 @@ public class FakePlatformsRepository : IPlatformsRepository
     public Task<Platform?> GetByIdAsync(Guid id)
     {
         return id == RegisteredId
-            ? Task.FromResult<Platform?>(GetPlatform(new Platform() { Id = RegisteredId }))
+            ? Task.FromResult<Platform?>(GetPlatform(new Platform { Id = RegisteredId }))
             : Task.FromResult<Platform?>(null);
     }
 
     public async Task<IEnumerable<Platform>> GetAllAsync(int page = 0, int pageSize = 10)
     {
         IEnumerable<Task<Platform>> platforms = new List<Task<Platform>>();
-        for (int i = 0; i < pageSize; i++)
-        {
-            platforms.Append(Task.FromResult(GetPlatform(new Platform())));
-        }
+        for (var i = 0; i < pageSize; i++) platforms.Append(Task.FromResult(GetPlatform(new Platform())));
 
         return await Task.WhenAll(platforms);
     }
@@ -67,11 +53,10 @@ public class FakePlatformsRepository : IPlatformsRepository
 
     public async Task<IEnumerable<Platform>> CreateMultipleAsync(IEnumerable<Platform> platforms)
     {
-        List<Platform> res = new List<Platform>();
-        foreach (Platform platform in platforms)
-        {
-            if (platform.Id == RegisteredId) res.Add(platform);
-        }
+        var res = new List<Platform>();
+        foreach (var platform in platforms)
+            if (platform.Id == RegisteredId)
+                res.Add(platform);
 
         return await Task.FromResult(res);
     }
@@ -79,8 +64,22 @@ public class FakePlatformsRepository : IPlatformsRepository
     public Task<Platform?> GetByExternalIdAsync(int externalId)
     {
         return externalId == RegisteredExternalId
-            ? Task.FromResult<Platform?>(GetPlatform(new Platform() { ExternalId = externalId }))
+            ? Task.FromResult<Platform?>(GetPlatform(new Platform { ExternalId = externalId }))
             : Task.FromResult<Platform?>(null);
+    }
+
+    private Platform GetPlatform(Platform platform)
+    {
+        return new()
+        {
+            Id = platform.Id,
+            Name = platform.Name,
+            ExternalId = platform.ExternalId,
+            GameRequirements = platform.GameRequirements,
+            GameReleaseDate = platform.GameReleaseDate,
+            CreatedAt = platform.CreatedAt,
+            UpdatedAt = platform.UpdatedAt
+        };
     }
 
     public async Task SaveGameReleaseDateAsync(Guid gameId, Guid platformId, DateTime? releaseDate)

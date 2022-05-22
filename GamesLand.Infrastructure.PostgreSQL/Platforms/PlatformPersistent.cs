@@ -8,14 +8,17 @@ internal record PlatformPersistent : BaseEntity<Guid>
     public int ExternalId { get; set; }
     public string Name { get; set; }
 
-    public Platform ToPlatform(DateTime? gameReleaseDate = null, string? requirements = null) => new Platform()
+    public Platform ToPlatform(DateTime? gameReleaseDate = null, string? requirements = null)
     {
-        Id = Id,
-        ExternalId = ExternalId,
-        Name = Name,
-        GameReleaseDate = gameReleaseDate,
-        GameRequirements = requirements,
-        CreatedAt = CreatedAt,
-        UpdatedAt = UpdatedAt
-    };
+        return new()
+        {
+            Id = Id,
+            ExternalId = ExternalId,
+            Name = Name,
+            GameReleaseDate = gameReleaseDate,
+            GameRequirements = requirements,
+            CreatedAt = CreatedAt,
+            UpdatedAt = UpdatedAt
+        };
+    }
 }

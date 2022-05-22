@@ -7,13 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\GamesLand.Infrastructure.PostgreSQL\GamesLand.Infrastructure.PostgreSQL.csproj" />
-      <ProjectReference Include="..\GamesLand.Web\GamesLand.Web.csproj" />
+        <ProjectReference Include="..\GamesLand.Infrastructure.PostgreSQL\GamesLand.Infrastructure.PostgreSQL.csproj"/>
+        <ProjectReference Include="..\GamesLand.Web\GamesLand.Web.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.4" />
-      <PackageReference Include="xunit.core" Version="2.4.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.4"/>
+        <PackageReference Include="xunit.core" Version="2.4.1"/>
     </ItemGroup>
 
 </Project>

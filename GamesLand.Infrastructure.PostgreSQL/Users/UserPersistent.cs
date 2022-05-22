@@ -9,16 +9,20 @@ internal record UserPersistent : BaseEntity<Guid>
     public string? LastName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public long TelegramChatId { get; set; }
 
-    public User ToUser() =>
-        new User()
+    public User ToUser()
+    {
+        return new()
         {
             Id = Id,
             FirstName = FirstName,
             LastName = LastName,
             Email = Email,
             Password = Password,
+            TelegramChatId = TelegramChatId,
             CreatedAt = CreatedAt,
             UpdatedAt = UpdatedAt
         };
+    }
 }

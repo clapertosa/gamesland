@@ -7,14 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Quartz" Version="3.4.0" />
-      <PackageReference Include="Quartz.Extensions.Hosting" Version="3.4.0" />
+        <PackageReference Include="Quartz" Version="3.4.0"/>
+        <PackageReference Include="Quartz.Extensions.Hosting" Version="3.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\GamesLand.Core\GamesLand.Core.csproj" />
-      <ProjectReference Include="..\GamesLand.Infrastructure.MailSender\GamesLand.Infrastructure.MailSender.csproj" />
-      <ProjectReference Include="..\GamesLand.Infrastructure.RAWG\GamesLand.Infrastructure.RAWG.csproj" />
+        <ProjectReference Include="..\GamesLand.Core\GamesLand.Core.csproj"/>
+        <ProjectReference Include="..\GamesLand.Infrastructure.MailSender\GamesLand.Infrastructure.MailSender.csproj"/>
+        <ProjectReference Include="..\GamesLand.Infrastructure.RAWG\GamesLand.Infrastructure.RAWG.csproj"/>
+        <ProjectReference Include="..\GamesLand.Infrastructure.Telegram\GamesLand.Infrastructure.Telegram.csproj"/>
     </ItemGroup>
 
 </Project>

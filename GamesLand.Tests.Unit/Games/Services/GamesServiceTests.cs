@@ -31,7 +31,7 @@ public class GamesServiceTests
     [Fact]
     public async Task Create_Game_With_Valid_Data()
     {
-        Game game = new Game()
+        var game = new Game
         {
             Name = "Red Dead Redemption II",
             Description = "description",
@@ -41,7 +41,7 @@ public class GamesServiceTests
             ToBeAnnounced = false
         };
 
-        Game gameRecord = await _gamesService.CreateGameAsync(game);
+        var gameRecord = await _gamesService.CreateGameAsync(game);
 
         Assert.Equal(game.Name, gameRecord.Name);
         Assert.Equal(game.Description, gameRecord.Description);
@@ -53,14 +53,14 @@ public class GamesServiceTests
     [Fact]
     public async Task Get_Game_By_Id_If_Exists()
     {
-        Game? gameRecord = await _gamesService.GetGameByIdAsync(FakeGamesRepository.RegisteredId);
+        var gameRecord = await _gamesService.GetGameByIdAsync(FakeGamesRepository.RegisteredId);
         Assert.Equal(FakeGamesRepository.RegisteredId, gameRecord?.Id);
     }
 
     [Fact]
     public async Task Get_Game_By_Id_If_Not_Exists()
     {
-        RestException exception =
+        var exception =
             await Assert.ThrowsAsync<RestException>(() => _gamesService.GetGameByIdAsync(Guid.NewGuid()));
         Assert.Equal(HttpStatusCode.NotFound, exception.StatusCode);
     }
@@ -68,14 +68,14 @@ public class GamesServiceTests
     [Fact]
     public async Task Get_Game_By_ExternalId_If_Exists()
     {
-        Game? gameRecord = await _gamesService.GetGameByExternalIdAsync(FakeGamesRepository.RegisteredExternalId);
+        var gameRecord = await _gamesService.GetGameByExternalIdAsync(FakeGamesRepository.RegisteredExternalId);
         Assert.Equal(FakeGamesRepository.RegisteredExternalId, gameRecord?.ExternalId);
     }
 
     [Fact]
     public async Task Get_Game_By_ExternalId_If_Not_Exists()
     {
-        RestException exception =
+        var exception =
             await Assert.ThrowsAsync<RestException>(() => _gamesService.GetGameByExternalIdAsync(-1));
         Assert.Equal(HttpStatusCode.NotFound, exception.StatusCode);
     }
@@ -83,16 +83,16 @@ public class GamesServiceTests
     [Fact]
     public async Task Update_Game_If_Exists()
     {
-        string gameName = "Update Game";
-        Game game = await _gamesService.UpdateGameAsync(FakeGamesRepository.RegisteredId,
-            new Game() { Name = gameName });
+        var gameName = "Update Game";
+        var game = await _gamesService.UpdateGameAsync(FakeGamesRepository.RegisteredId,
+            new Game { Name = gameName });
         Assert.Equal(gameName, game.Name);
     }
 
     [Fact]
     public async Task Update_Game_If_Not_Exists()
     {
-        RestException exception =
+        var exception =
             await Assert.ThrowsAsync<RestException>(() => _gamesService.UpdateGameAsync(Guid.NewGuid(), new Game()));
         Assert.Equal(HttpStatusCode.NotFound, exception.StatusCode);
     }
@@ -114,7 +114,7 @@ public class GamesServiceTests
     [Fact]
     public async Task Delete_Game_If_Not_Exists()
     {
-        RestException exception =
+        var exception =
             await Assert.ThrowsAsync<RestException>(() => _gamesService.DeleteGameAsync(Guid.NewGuid()));
 
         Assert.Equal(HttpStatusCode.NotFound, exception.StatusCode);
@@ -126,11 +126,11 @@ public class GamesServiceTests
         try
         {
             await _gamesService.AddGameToUserAsync(FakeUsersRepository.RegisteredId,
-                new Game()
+                new Game
                 {
                     Platforms = new[]
                     {
-                        new Platform()
+                        new Platform
                         {
                             Id = FakePlatformsRepository.RegisteredId,
                             ExternalId = FakePlatformsRepository.RegisteredExternalId
@@ -148,7 +148,7 @@ public class GamesServiceTests
     [Fact]
     public async Task Add_Game_To_User_When_User_Not_Exists()
     {
-        RestException exception =
+        var exception =
             await Assert.ThrowsAsync<RestException>(() => _gamesService.AddGameToUserAsync(Guid.Empty, new Game(), 1));
 
         Assert.Equal(HttpStatusCode.NotFound, exception.StatusCode);

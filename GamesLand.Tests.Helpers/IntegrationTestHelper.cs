@@ -22,8 +22,8 @@ public class IntegrationTestHelper
 {
     protected readonly HttpClient Client;
     protected readonly HttpClient ClientAuthorized;
-    protected readonly IDbConnection Connection;
     protected readonly IConfiguration Configuration;
+    protected readonly IDbConnection Connection;
 
     protected IntegrationTestHelper()
     {
@@ -31,7 +31,7 @@ public class IntegrationTestHelper
             .WithWebHostBuilder(builder => { builder.UseEnvironment("test"); });
 
         Configuration = application.Services.GetRequiredService<IConfiguration>();
-        Connection = new NpgsqlConnection()
+        Connection = new NpgsqlConnection
         {
             ConnectionString = DatabaseUtils.GetDatabaseUrlFormatted(Configuration["DATABASE_URL"])
         };
@@ -54,11 +54,9 @@ public class IntegrationTestHelper
     protected async Task DropTables()
     {
         const string tablesQuery = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';";
-        IEnumerable<Table> tables = await Connection.QueryAsync<Table>(tablesQuery);
+        var tables = await Connection.QueryAsync<Table>(tablesQuery);
 
-        foreach (Table table in tables)
-        {
+        foreach (var table in tables)
             await Connection.ExecuteAsync($"DROP TABLE IF EXISTS \"{table.TableName}\" CASCADE");
-        }
     }
 }
