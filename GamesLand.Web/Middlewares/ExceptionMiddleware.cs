@@ -6,8 +6,8 @@ namespace GamesLand.Web.Middlewares;
 
 public class ExceptionMiddleware
 {
-    private readonly RequestDelegate _next;
     private readonly ILogger<ExceptionMiddleware> _logger;
+    private readonly RequestDelegate _next;
 
     public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
     {
@@ -36,7 +36,7 @@ public class ExceptionMiddleware
         {
             case RestException re:
             {
-                logger.LogError($"Rest Error");
+                logger.LogError("Rest Error");
                 errors = re.Errors;
                 context.Response.StatusCode = (int)re.StatusCode;
             }
@@ -54,7 +54,7 @@ public class ExceptionMiddleware
 
         if (errors != null)
         {
-            string serializedErrors = JsonSerializer.Serialize(errors);
+            var serializedErrors = JsonSerializer.Serialize(errors);
             await context.Response.WriteAsync(serializedErrors);
         }
     }

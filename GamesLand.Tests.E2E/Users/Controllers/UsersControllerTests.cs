@@ -13,27 +13,29 @@ public class UsersControllerTests : IntegrationTestBase
     [Fact]
     public async Task Sign_Up_User_With_Valid_Data()
     {
-        User user = new User()
+        var user = new User
         {
             FirstName = "Name",
             LastName = "Last name",
             Email = "email@email.com",
-            Password = "password"
+            Password = "password",
+            TelegramChatId = 123
         };
 
         var res = await Client.PostAsJsonAsync("api/users/signup", user);
-        UserResponse? userResponse = await res.Content.ReadFromJsonAsync<UserResponse>();
+        var userResponse = await res.Content.ReadFromJsonAsync<UserResponse>();
 
         Assert.Equal(HttpStatusCode.Created, res.StatusCode);
         Assert.Equal(user.FirstName, userResponse?.FirstName);
         Assert.Equal(user.LastName, userResponse?.LastName);
         Assert.Equal(user.Email, userResponse?.Email);
+        Assert.Equal(user.TelegramChatId, userResponse?.TelegramChatId);
     }
 
     [Fact]
     public async Task Sign_Up_User_With_A_Not_Valid_Email()
     {
-        User user = new User()
+        var user = new User
         {
             FirstName = "Name",
             LastName = "Last name",
@@ -49,7 +51,7 @@ public class UsersControllerTests : IntegrationTestBase
     [Fact]
     public async Task Sign_Up_User_Without_An_Email()
     {
-        User user = new User()
+        var user = new User
         {
             FirstName = "Name",
             LastName = "Last name",
@@ -64,7 +66,7 @@ public class UsersControllerTests : IntegrationTestBase
     [Fact]
     public async Task Sign_Up_User_With_A_Not_Valid_Password()
     {
-        User user = new User()
+        var user = new User
         {
             FirstName = "Name",
             LastName = "Last name",
@@ -80,7 +82,7 @@ public class UsersControllerTests : IntegrationTestBase
     [Fact]
     public async Task Sign_Up_User_Without_A_Password()
     {
-        User user = new User()
+        var user = new User
         {
             FirstName = "Name",
             LastName = "Last name",
@@ -95,17 +97,17 @@ public class UsersControllerTests : IntegrationTestBase
     [Fact]
     public async Task Sign_In_User_With_Valid_Data()
     {
-        User user = new User()
+        var user = new User
         {
             FirstName = "Name",
             LastName = "Last name",
             Email = "email@email.com",
             Password = "password"
         };
-        
+
         await Client.PostAsJsonAsync("api/users/signup", user);
         var res = await Client.PostAsJsonAsync("api/users/signin", user);
-        string token = await res.Content.ReadAsStringAsync();
+        var token = await res.Content.ReadAsStringAsync();
 
         Assert.NotNull(token);
     }

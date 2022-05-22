@@ -7,6 +7,7 @@ using GamesLand.Infrastructure.RAWG.Entities;
 using GamesLand.Infrastructure.RAWG.Requests;
 using GamesLand.Tests.Helpers;
 using GamesLand.Web.Games.Requests;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace GamesLand.Tests.E2E.Games.Controllers;
@@ -27,8 +28,11 @@ public class GamesControllersTests : IntegrationTestBase
     {
         User user = new User()
         {
+            FirstName = "Claudio",
+            LastName = "Test",
             Email = "email@email.com",
-            Password = "password"
+            Password = "password",
+            TelegramChatId = 123
         };
         AddGameToUserRequest addGameToUserRequest = new AddGameToUserRequest()
         {
@@ -39,6 +43,7 @@ public class GamesControllersTests : IntegrationTestBase
                 Slug = "red-dead-redemption",
                 Tba = false,
                 Rating = 0,
+                BackgroundImage = "test",
                 RatingsCount = 0,
                 Updated = "2022-05-14",
                 Released = "2022-05-14",
@@ -62,6 +67,8 @@ public class GamesControllersTests : IntegrationTestBase
                 }
             }
         };
+
+        var test = JsonConvert.SerializeObject(addGameToUserRequest);
 
         await Client.PostAsJsonAsync("api/users/signup", user);
         var res = await ClientAuthorized.PostAsJsonAsync("api/games/add", addGameToUserRequest);

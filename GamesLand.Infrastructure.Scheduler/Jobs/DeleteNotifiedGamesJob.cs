@@ -7,8 +7,8 @@ namespace GamesLand.Infrastructure.Scheduler.Jobs;
 [DisallowConcurrentExecution]
 public class DeleteNotifiedGamesJob : IJob
 {
-    private readonly ILogger<DeleteNotifiedGamesJob> _logger;
     private readonly IGamesService _gamesService;
+    private readonly ILogger<DeleteNotifiedGamesJob> _logger;
 
     public DeleteNotifiedGamesJob(ILogger<DeleteNotifiedGamesJob> logger, IGamesService gamesService)
     {

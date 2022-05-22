@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Dapper;
-using GamesLand.Core.Games.Entities;
 using GamesLand.Core.Games.Repositories;
 using GamesLand.Infrastructure.PostgreSQL.Games;
 using GamesLand.Tests.Helpers;
@@ -22,7 +21,7 @@ public class GamesRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Create_Game_With_Valid_Data()
     {
-        Game game = new GameBuilder()
+        var game = new GameBuilder()
             .WithExternalId(1233)
             .WithName("Red Dead Redemption")
             .WithDescription("Western")
@@ -33,7 +32,7 @@ public class GamesRepositoryTests : IntegrationTestBase
             .WithRating(0)
             .Build();
 
-        Game gameRecord = await _gamesRepository.CreateAsync(game);
+        var gameRecord = await _gamesRepository.CreateAsync(game);
 
         Assert.Equal(game.Name, gameRecord.Name);
         Assert.Equal(game.Description, gameRecord.Description);
@@ -44,7 +43,7 @@ public class GamesRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Get_Game_By_Id()
     {
-        Game game = new GameBuilder()
+        var game = new GameBuilder()
             .WithName("Name")
             .WithExternalId(123)
             .WithToBeAnnounced(true)
@@ -53,8 +52,8 @@ public class GamesRepositoryTests : IntegrationTestBase
             .WithRating(0)
             .Build();
 
-        Game gameRecord = await _gamesRepository.CreateAsync(game);
-        Game? returnedGame = await _gamesRepository.GetByIdAsync(gameRecord.Id);
+        var gameRecord = await _gamesRepository.CreateAsync(game);
+        var returnedGame = await _gamesRepository.GetByIdAsync(gameRecord.Id);
 
         Assert.Equal(gameRecord.Id, returnedGame?.Id);
         Assert.Equal(gameRecord.ExternalId, returnedGame?.ExternalId);
@@ -63,7 +62,7 @@ public class GamesRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Get_Game_By_ExternalId()
     {
-        Game game = new GameBuilder()
+        var game = new GameBuilder()
             .WithName("Name")
             .WithExternalId(123)
             .WithToBeAnnounced(true)
@@ -73,7 +72,7 @@ public class GamesRepositoryTests : IntegrationTestBase
             .Build();
 
         await _gamesRepository.CreateAsync(game);
-        Game? gameRecord = await _gamesRepository.GetByExternalIdAsync(game.ExternalId);
+        var gameRecord = await _gamesRepository.GetByExternalIdAsync(game.ExternalId);
 
         Assert.Equal(game.ExternalId, gameRecord?.ExternalId);
     }
@@ -81,7 +80,7 @@ public class GamesRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Update_Game_With_Valid_Data()
     {
-        Game game = new GameBuilder()
+        var game = new GameBuilder()
             .WithName("Name")
             .WithExternalId(123)
             .WithToBeAnnounced(true)
@@ -90,12 +89,12 @@ public class GamesRepositoryTests : IntegrationTestBase
             .WithRating(0)
             .Build();
 
-        string newName = "new name";
+        var newName = "new name";
 
-        Game? oldGameRecord = await _gamesRepository.CreateAsync(game);
+        var oldGameRecord = await _gamesRepository.CreateAsync(game);
         game.Name = newName;
         await _gamesRepository.UpdateAsync(oldGameRecord.Id, game);
-        Game? newGameRecord = await _gamesRepository.GetByIdAsync(oldGameRecord.Id);
+        var newGameRecord = await _gamesRepository.GetByIdAsync(oldGameRecord.Id);
 
         Assert.Equal(newName, newGameRecord?.Name);
     }
@@ -103,7 +102,7 @@ public class GamesRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Delete_Game_Which_Exists()
     {
-        Game game = new GameBuilder()
+        var game = new GameBuilder()
             .WithName("Name")
             .WithExternalId(123)
             .WithToBeAnnounced(true)
@@ -112,9 +111,9 @@ public class GamesRepositoryTests : IntegrationTestBase
             .WithRating(0)
             .Build();
 
-        Game? gameRecord = await _gamesRepository.CreateAsync(game);
+        var gameRecord = await _gamesRepository.CreateAsync(game);
         await _gamesRepository.DeleteAsync(gameRecord.Id);
-        bool gameExists = await _gamesRepository.GetByIdAsync(gameRecord.Id) != null;
+        var gameExists = await _gamesRepository.GetByIdAsync(gameRecord.Id) != null;
 
         Assert.False(gameExists);
     }
@@ -122,7 +121,7 @@ public class GamesRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Create_Existing_Game_Updates_It()
     {
-        Game game = new GameBuilder()
+        var game = new GameBuilder()
             .WithName("Castlevania")
             .WithExternalId(123)
             .WithDescription("Symphony of the Night")
@@ -138,10 +137,10 @@ public class GamesRepositoryTests : IntegrationTestBase
         await _gamesRepository.CreateAsync(game);
         const string name = "Castlevania - Symphony of The Night";
         game.NameOriginal = name;
-        Game gameRecord = await _gamesRepository.CreateAsync(game);
+        var gameRecord = await _gamesRepository.CreateAsync(game);
 
         const string query = "SELECT COUNT(id) FROM games";
-        int res = await Connection.QueryFirstAsync<int>(query);
+        var res = await Connection.QueryFirstAsync<int>(query);
 
         Assert.Equal(name, gameRecord.NameOriginal);
         Assert.Equal(1, res);

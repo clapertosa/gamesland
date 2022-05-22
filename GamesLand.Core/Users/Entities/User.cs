@@ -8,6 +8,7 @@ public record User : BaseEntity<Guid>
     public string? LastName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public long TelegramChatId { get; set; }
 
     public IEnumerable<Game> Games { get; set; }
 }

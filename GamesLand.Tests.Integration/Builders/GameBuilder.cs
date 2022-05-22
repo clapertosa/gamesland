@@ -5,11 +5,7 @@ namespace GamesLand.Tests.Integration.Builders;
 
 public class GameBuilder
 {
-    private readonly Game _game = new Game();
-
-    public GameBuilder()
-    {
-    }
+    private readonly Game _game = new();
 
     public GameBuilder WithExternalId(int id)
     {
@@ -83,5 +79,8 @@ public class GameBuilder
         return this;
     }
 
-    public Game Build() => _game;
+    public Game Build()
+    {
+        return _game;
+    }
 }

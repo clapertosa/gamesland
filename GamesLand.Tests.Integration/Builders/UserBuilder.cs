@@ -6,11 +6,7 @@ namespace GamesLand.Tests.Integration.Builders;
 
 public class UserBuilder
 {
-    private readonly User _user = new User();
-
-    public UserBuilder()
-    {
-    }
+    private readonly User _user = new();
 
     public UserBuilder WithFirstName(string firstName)
     {
@@ -42,5 +38,8 @@ public class UserBuilder
         return this;
     }
 
-    public User Build() => _user;
+    public User Build()
+    {
+        return _user;
+    }
 }

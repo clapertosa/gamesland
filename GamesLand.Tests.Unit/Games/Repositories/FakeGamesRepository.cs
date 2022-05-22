@@ -14,28 +14,6 @@ public class FakeGamesRepository : IGamesRepository
     public static Guid RegisteredId => Guid.Parse("85c6aa9b-d2d6-4eb3-a44c-453eff606b13");
     public static int RegisteredExternalId => 1234;
 
-    private Game GetGame(Game entity)
-    {
-        return new Game()
-        {
-            Id = entity.Id,
-            ExternalId = entity.ExternalId,
-            Name = entity.Name,
-            NameOriginal = entity.NameOriginal,
-            Description = entity.Description,
-            Rating = entity.Rating,
-            Released = entity.Released,
-            Updated = entity.Updated,
-            Website = entity.Website,
-            RatingsCount = entity.RatingsCount,
-            BackgroundImagePath = entity.BackgroundImagePath,
-            BackgroundImageAdditionalPath = entity.BackgroundImageAdditionalPath,
-            ToBeAnnounced = entity.ToBeAnnounced,
-            CreatedAt = entity.CreatedAt,
-            UpdatedAt = entity.UpdatedAt
-        };
-    }
-
     public Task<Game> CreateAsync(Game entity)
     {
         return Task.FromResult(GetGame(entity));
@@ -44,17 +22,14 @@ public class FakeGamesRepository : IGamesRepository
     public Task<Game?> GetByIdAsync(Guid id)
     {
         return id == RegisteredId
-            ? Task.FromResult<Game?>(GetGame(new Game() { Id = RegisteredId }))
+            ? Task.FromResult<Game?>(GetGame(new Game { Id = RegisteredId }))
             : Task.FromResult<Game?>(null);
     }
 
     public async Task<IEnumerable<Game>> GetAllAsync(int page = 0, int pageSize = 10)
     {
         IEnumerable<Task<Game>> games = new List<Task<Game>>();
-        for (int i = 0; i < pageSize; i++)
-        {
-            games.Append(Task.FromResult(GetGame(new Game())));
-        }
+        for (var i = 0; i < pageSize; i++) games.Append(Task.FromResult(GetGame(new Game())));
 
         return await Task.WhenAll(games);
     }
@@ -74,7 +49,7 @@ public class FakeGamesRepository : IGamesRepository
     public Task<Game?> GetByExternalIdAsync(int externalId)
     {
         return externalId == RegisteredExternalId
-            ? Task.FromResult<Game?>(GetGame(new Game() { ExternalId = externalId }))
+            ? Task.FromResult<Game?>(GetGame(new Game { ExternalId = externalId }))
             : Task.FromResult<Game?>(null);
     }
 
@@ -106,5 +81,27 @@ public class FakeGamesRepository : IGamesRepository
     public async Task DeleteNotifiedGamesAsync()
     {
         throw new NotImplementedException();
+    }
+
+    private Game GetGame(Game entity)
+    {
+        return new Game
+        {
+            Id = entity.Id,
+            ExternalId = entity.ExternalId,
+            Name = entity.Name,
+            NameOriginal = entity.NameOriginal,
+            Description = entity.Description,
+            Rating = entity.Rating,
+            Released = entity.Released,
+            Updated = entity.Updated,
+            Website = entity.Website,
+            RatingsCount = entity.RatingsCount,
+            BackgroundImagePath = entity.BackgroundImagePath,
+            BackgroundImageAdditionalPath = entity.BackgroundImageAdditionalPath,
+            ToBeAnnounced = entity.ToBeAnnounced,
+            CreatedAt = entity.CreatedAt,
+            UpdatedAt = entity.UpdatedAt
+        };
     }
 }

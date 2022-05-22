@@ -18,7 +18,7 @@ public class PlatformsRepository : IPlatformsRepository
     {
         const string query =
             "INSERT INTO platforms(external_id, name) VALUES(@ExternalId, @Name) ON CONFLICT(external_id) DO UPDATE SET name = @Name RETURNING *";
-        PlatformPersistent platformPersistent =
+        var platformPersistent =
             await _connection.QueryFirstAsync<PlatformPersistent>(query, new { entity.ExternalId, entity.Name });
         return platformPersistent.ToPlatform();
     }
@@ -26,7 +26,7 @@ public class PlatformsRepository : IPlatformsRepository
     public async Task<Platform?> GetByIdAsync(Guid id)
     {
         const string query = "SELECT * FROM platforms WHERE id = @Id";
-        PlatformPersistent platformPersistent =
+        var platformPersistent =
             await _connection.QueryFirstOrDefaultAsync<PlatformPersistent>(query, new { Id = id });
         return platformPersistent?.ToPlatform();
     }
@@ -40,7 +40,7 @@ public class PlatformsRepository : IPlatformsRepository
     {
         const string query =
             "UPDATE platforms SET name = @Name, external_id = @ExternalId, updated_at = current_timestamp WHERE id = @Id RETURNING *";
-        PlatformPersistent platformPersistent =
+        var platformPersistent =
             await _connection.QueryFirstAsync<PlatformPersistent>(query,
                 new { entity.Name, entity.ExternalId, Id = id });
         return platformPersistent.ToPlatform();
@@ -54,14 +54,12 @@ public class PlatformsRepository : IPlatformsRepository
 
     public async Task<IEnumerable<Platform>> CreateMultipleAsync(IEnumerable<Platform> platforms)
     {
-        List<PlatformPersistent> platformsPersistent = new List<PlatformPersistent>();
+        var platformsPersistent = new List<PlatformPersistent>();
         const string query =
             "INSERT INTO platforms(external_id, name) VALUES(@ExternalId, @Name) ON CONFLICT(external_id) DO UPDATE SET name = @Name, updated_at = current_timestamp RETURNING *";
-        foreach (Platform p in platforms)
-        {
+        foreach (var p in platforms)
             platformsPersistent.Add(await _connection.QueryFirstAsync<PlatformPersistent>(query,
                 new { p.ExternalId, p.Name }));
-        }
 
         return platformsPersistent.Select(x => x.ToPlatform());
     }
@@ -69,7 +67,7 @@ public class PlatformsRepository : IPlatformsRepository
     public async Task<Platform?> GetByExternalIdAsync(int externalId)
     {
         const string query = "SELECT * FROM platforms WHERE external_id = @ExternalId";
-        PlatformPersistent platformPersistent =
+        var platformPersistent =
             await _connection.QueryFirstOrDefaultAsync<PlatformPersistent>(query, new { ExternalId = externalId });
         return platformPersistent?.ToPlatform();
     }

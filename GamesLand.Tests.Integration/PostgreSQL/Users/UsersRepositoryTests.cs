@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GamesLand.Core.Users.Entities;
@@ -23,7 +22,7 @@ public class UsersRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Create_User_Successfully()
     {
-        User user = new UserBuilder()
+        var user = new UserBuilder()
             .WithFirstName("First name")
             .WithLastName("Last Name")
             .WithEmail("email@email.com")
@@ -39,12 +38,12 @@ public class UsersRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Get_User_By_Email_With_Existing_User()
     {
-        User user = new UserBuilder()
+        var user = new UserBuilder()
             .WithEmail("email@email.com")
             .WithPassword("password")
             .Build();
         await _usersRepository.CreateAsync(user);
-        User? userRecord = await _usersRepository.GetByEmailAsync(user.Email);
+        var userRecord = await _usersRepository.GetByEmailAsync(user.Email);
 
         Assert.NotNull(userRecord);
     }
@@ -52,7 +51,7 @@ public class UsersRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Get_User_By_Email_With_Non_Existing_user()
     {
-        User? userRecord = await _usersRepository.GetByEmailAsync("email@email.com");
+        var userRecord = await _usersRepository.GetByEmailAsync("email@email.com");
 
         Assert.Null(userRecord);
     }
@@ -60,12 +59,12 @@ public class UsersRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Get_User_By_Id_When_Exists()
     {
-        User user = new UserBuilder()
+        var user = new UserBuilder()
             .WithEmail("email@email.com")
             .WithPassword("password")
             .Build();
-        User registeredUser = await _usersRepository.CreateAsync(user);
-        User? userRecord = await _usersRepository.GetByIdAsync(registeredUser.Id);
+        var registeredUser = await _usersRepository.CreateAsync(user);
+        var userRecord = await _usersRepository.GetByIdAsync(registeredUser.Id);
 
         Assert.NotNull(userRecord);
     }
@@ -73,7 +72,7 @@ public class UsersRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Get_User_By_Id_When_Not_Exists()
     {
-        User? userRecord = await _usersRepository.GetByIdAsync(Guid.NewGuid());
+        var userRecord = await _usersRepository.GetByIdAsync(Guid.NewGuid());
 
         Assert.Null(userRecord);
     }
@@ -81,17 +80,17 @@ public class UsersRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Get_All_Users()
     {
-        int pageSize = 5;
-        int page = 0;
-        int counter = 0;
-        for (int i = 0; i < 10; i++)
+        var pageSize = 5;
+        var page = 0;
+        var counter = 0;
+        for (var i = 0; i < 10; i++)
         {
-            string email = $"email@email{counter}.com";
-            await _usersRepository.CreateAsync(new User() { Email = email, Password = "password" });
+            var email = $"email@email{counter}.com";
+            await _usersRepository.CreateAsync(new User { Email = email, Password = "password" });
             counter++;
         }
 
-        IEnumerable<User> users = await _usersRepository.GetAllAsync(page, pageSize);
+        var users = await _usersRepository.GetAllAsync(page, pageSize);
 
         Assert.Equal(pageSize, users.Count());
     }
@@ -99,11 +98,11 @@ public class UsersRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Update_User()
     {
-        User user = await _usersRepository.CreateAsync(new User() { Email = "email@email.com", Password = "password" });
+        var user = await _usersRepository.CreateAsync(new User { Email = "email@email.com", Password = "password" });
         user.FirstName = "Name";
         user.LastName = "Last name";
         await _usersRepository.UpdateAsync(user.Id, user);
-        User? userRecord = await _usersRepository.GetByIdAsync(user.Id);
+        var userRecord = await _usersRepository.GetByIdAsync(user.Id);
 
         Assert.Equal(user.FirstName, userRecord?.FirstName);
         Assert.Equal(user.LastName, userRecord?.LastName);
@@ -112,9 +111,9 @@ public class UsersRepositoryTests : IntegrationTestBase
     [Fact]
     public async Task Delete_User()
     {
-        User user = await _usersRepository.CreateAsync(new User() { Email = "email@email.com", Password = "password" });
+        var user = await _usersRepository.CreateAsync(new User { Email = "email@email.com", Password = "password" });
         await _usersRepository.DeleteAsync(user.Id);
-        IEnumerable<User> users = await _usersRepository.GetAllAsync();
+        var users = await _usersRepository.GetAllAsync();
 
         Assert.Empty(users);
     }

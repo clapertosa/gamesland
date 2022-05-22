@@ -9,35 +9,41 @@ public record AddGameToUserRequest
     public RawgGame Game { get; set; }
     public RawgPlatformParent Platform { get; set; }
 
-    public Game ToGame() => new Game()
+    public Game ToGame()
     {
-        ExternalId = Game.Id,
-        Name = Game.Name,
-        NameOriginal = Game.NameOriginal,
-        Description = Game.Description ?? "",
-        Rating = Game.Rating,
-        Released = Game.Released != null ? DateTime.Parse(Game.Released) : null,
-        ToBeAnnounced = Game.Tba,
-        Updated = Game.Updated != null ? DateTime.Parse(Game.Updated) : null,
-        Website = Game.Website,
-        RatingsCount = Game.RatingsCount,
-        BackgroundImagePath = Game.BackgroundImage,
-        BackgroundImageAdditionalPath = Game.BackgroundImageAdditional,
-        Platforms = Game.Platforms?.Select(x => new Platform()
+        return new()
         {
-            Name = x.Platform.Name,
-            ExternalId = x.Platform.Id,
-            GameReleaseDate = x.ReleasedAt,
-            GameRequirements = $"Minimum: {x.Requirements?.Minimum}/Recommended: {x.Requirements?.Recommended}"
-        })
-    };
+            ExternalId = Game.Id,
+            Name = Game.Name,
+            NameOriginal = Game.NameOriginal,
+            Description = Game.Description ?? "",
+            Rating = Game.Rating,
+            Released = Game.Released != null ? DateTime.Parse(Game.Released) : null,
+            ToBeAnnounced = Game.Tba,
+            Updated = Game.Updated != null ? DateTime.Parse(Game.Updated) : null,
+            Website = Game.Website,
+            RatingsCount = Game.RatingsCount,
+            BackgroundImagePath = Game.BackgroundImage,
+            BackgroundImageAdditionalPath = Game.BackgroundImageAdditional,
+            Platforms = Game.Platforms?.Select(x => new Platform
+            {
+                Name = x.Platform.Name,
+                ExternalId = x.Platform.Id,
+                GameReleaseDate = x.ReleasedAt,
+                GameRequirements = $"Minimum: {x.Requirements?.Minimum}/Recommended: {x.Requirements?.Recommended}"
+            })
+        };
+    }
 
-    public Platform ToPlatform() => new Platform()
+    public Platform ToPlatform()
     {
-        ExternalId = Platform.Platform.Id,
-        Name = Platform.Platform.Name,
-        GameReleaseDate = Platform.ReleasedAt,
-        GameRequirements =
-            $"Minimum: {Platform.Requirements?.Minimum}/Recommended: {Platform.Requirements?.Recommended}"
-    };
+        return new()
+        {
+            ExternalId = Platform.Platform.Id,
+            Name = Platform.Platform.Name,
+            GameReleaseDate = Platform.ReleasedAt,
+            GameRequirements =
+                $"Minimum: {Platform.Requirements?.Minimum}/Recommended: {Platform.Requirements?.Recommended}"
+        };
+    }
 }

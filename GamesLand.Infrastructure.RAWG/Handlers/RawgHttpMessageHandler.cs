@@ -14,8 +14,8 @@ public class RawgHttpMessageHandler : DelegatingHandler
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
-        char prefix = request.RequestUri != null && request.RequestUri.ToString().Contains('?') ? '&' : '?';
-        Uri uriWithKey = new Uri(request.RequestUri + $"{prefix}key={_configuration["rawg_key"]}");
+        var prefix = request.RequestUri != null && request.RequestUri.ToString().Contains('?') ? '&' : '?';
+        var uriWithKey = new Uri(request.RequestUri + $"{prefix}key={_configuration["rawg_key"]}");
         request.RequestUri = uriWithKey;
         return base.SendAsync(request, cancellationToken);
     }

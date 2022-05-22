@@ -26,7 +26,7 @@ public class PlatformsService : IPlatformsService
 
     public async Task<Platform> UpdatePlatformAsync(Guid id, Platform platform)
     {
-        Platform? platformRecord = await _platformsRepository.GetByIdAsync(id);
+        var platformRecord = await _platformsRepository.GetByIdAsync(id);
         if (platformRecord == null)
             throw new RestException(HttpStatusCode.NotFound, new { Message = "Platform not found." });
         return await _platformsRepository.UpdateAsync(id, platform);
@@ -34,7 +34,7 @@ public class PlatformsService : IPlatformsService
 
     public async Task<Platform?> GetPlatformByIdAsync(Guid id)
     {
-        Platform? platformRecord = await _platformsRepository.GetByIdAsync(id);
+        var platformRecord = await _platformsRepository.GetByIdAsync(id);
         if (platformRecord == null)
             throw new RestException(HttpStatusCode.NotFound, new { Message = "Platform not found." });
         return platformRecord;
@@ -42,7 +42,7 @@ public class PlatformsService : IPlatformsService
 
     public async Task<Platform?> GetPlatformByExternalIdAsync(int id)
     {
-        Platform? platformRecord = await _platformsRepository.GetByExternalIdAsync(id);
+        var platformRecord = await _platformsRepository.GetByExternalIdAsync(id);
         if (platformRecord == null)
             throw new RestException(HttpStatusCode.NotFound, new { Message = "Platform not found." });
         return platformRecord;
@@ -50,7 +50,7 @@ public class PlatformsService : IPlatformsService
 
     public async Task DeletePlatformAsync(Guid id)
     {
-        Platform? platformRecord = await _platformsRepository.GetByIdAsync(id);
+        var platformRecord = await _platformsRepository.GetByIdAsync(id);
         if (platformRecord == null)
             throw new RestException(HttpStatusCode.NotFound, new { Message = "Platform not found." });
         await _platformsRepository.DeleteAsync(id);

@@ -1,5 +1,4 @@
 ﻿using GamesLand.Core.Games.Services;
-using GamesLand.Core.Users.Entities;
 using GamesLand.Core.Users.Services;
 using GamesLand.Infrastructure.RAWG.Requests;
 using GamesLand.Infrastructure.RAWG.Services;
@@ -12,8 +11,8 @@ public class GamesController : BaseController
 {
     private readonly IGamesService _gamesService;
     private readonly IRawgService _rawgService;
-    private readonly IUsersService _usersService;
     private readonly IUserAuthentication _userAuthentication;
+    private readonly IUsersService _usersService;
 
     public GamesController(
         IGamesService gamesService,
@@ -31,8 +30,8 @@ public class GamesController : BaseController
     [HttpPost("add")]
     public async Task<IActionResult> AddGameToUser(AddGameToUserRequest addGameToUserRequest)
     {
-        string userEmail = _userAuthentication.GetUserEmailFromToken((Request.Headers.Authorization[0].Split(" ")[1]));
-        User? userRecord =
+        var userEmail = _userAuthentication.GetUserEmailFromToken(Request.Headers.Authorization[0].Split(" ")[1]);
+        var userRecord =
             await _usersService.GetUserByEmailAsync(userEmail);
         await _gamesService.AddGameToUserAsync(
             userRecord.Id,

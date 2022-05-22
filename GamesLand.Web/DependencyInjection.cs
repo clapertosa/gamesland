@@ -1,15 +1,16 @@
 ﻿using System.Text;
-using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
-using GamesLand.Infrastructure.MailSender.Services;
 using GamesLand.Infrastructure.PostgreSQL;
 using GamesLand.Infrastructure.RAWG.Handlers;
 using GamesLand.Infrastructure.RAWG.Services;
 using GamesLand.Infrastructure.Scheduler.Jobs;
+using GamesLand.Infrastructure.Telegram;
 using GamesLand.Web.Users.Validators;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 using Quartz;
+using Telegram.Bot;
 
 namespace GamesLand.Web;
 
@@ -19,10 +20,12 @@ public static class DependencyInjection
     {
         services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(typeof(SignUpUserValidator).Assembly));
         services.AddControllers()
-            .AddJsonOptions(options =>
+            .AddNewtonsoftJson(options =>
             {
-                options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault;
+                options.SerializerSettings.ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new CamelCaseNamingStrategy()
+                };
             });
         services.AddPostgreSqlInfrastructure(configuration);
 
@@ -34,7 +37,7 @@ public static class DependencyInjection
         }).AddJwtBearer(options =>
         {
             var key = Encoding.UTF8.GetBytes(configuration["JWT:secret"]);
-            options.TokenValidationParameters = new TokenValidationParameters()
+            options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = false,
                 ValidateAudience = false,
@@ -46,23 +49,30 @@ public static class DependencyInjection
         // Authorization
         services.AddAuthorization();
 
-        // Mail
-        services.AddSingleton<IMailService, MailService>();
+        // Telegram
+        services.AddTelegram();
+        services.AddHttpClient("telegram").AddTypedClient<ITelegramBotClient>(client =>
+        {
+            client.BaseAddress = new Uri("https://api.telegram.org");
+            return new TelegramBotClient(configuration["telegram_bot:token"], client);
+        });
 
         // Quartz
+        // Every day at 00 AM: 0 0 0 * * ?
+        // Every day at 01 AM: 0 0 1 * * ?
         // 5 seconds: 0/5 * * * * ?
         services.AddQuartz(q =>
         {
             q.UseMicrosoftDependencyInjectionJobFactory();
-            JobKey sendReleasedGamesMailJobKey = new JobKey("SendReleasedGamesMailJob");
-            q.AddJob<SendReleasedGamesMailJob>(config => config
-                .WithIdentity(sendReleasedGamesMailJobKey));
+            var sendReleasedGamesMessageJobKey = new JobKey("SendReleasedGamesMessageJob");
+            q.AddJob<SendReleasedGamesMessageJob>(config => config
+                .WithIdentity(sendReleasedGamesMessageJobKey));
             q.AddTrigger(config => config
-                .ForJob(sendReleasedGamesMailJobKey)
+                .ForJob(sendReleasedGamesMessageJobKey)
                 .WithCronSchedule("0 0 0 * * ?",
                     x => x.InTimeZone(TimeZoneInfo.FindSystemTimeZoneById("EST")))); // 00 AM GMT
 
-            JobKey deleteNotifiedGamesJobKey = new JobKey("DeleteNotifiedGamesJob");
+            var deleteNotifiedGamesJobKey = new JobKey("DeleteNotifiedGamesJob");
             q.AddJob<DeleteNotifiedGamesJob>(config => config
                 .WithIdentity(deleteNotifiedGamesJobKey));
             q.AddTrigger(config => config

@@ -18,22 +18,25 @@ internal record GamePersistent : BaseEntity<Guid>
     public double Rating { get; set; }
     public int RatingsCount { get; set; }
 
-    public Game ToGame() => new Game()
+    public Game ToGame()
     {
-        Id = Id,
-        ExternalId = ExternalId,
-        Name = Name,
-        NameOriginal = NameOriginal,
-        Description = Description,
-        Released = Released,
-        Updated = Updated,
-        ToBeAnnounced = ToBeAnnounced,
-        BackgroundImagePath = BackgroundImagePath,
-        BackgroundImageAdditionalPath = BackgroundImageAdditionalPath,
-        Website = Website,
-        Rating = Rating,
-        RatingsCount = RatingsCount,
-        CreatedAt = CreatedAt,
-        UpdatedAt = UpdatedAt
-    };
+        return new()
+        {
+            Id = Id,
+            ExternalId = ExternalId,
+            Name = Name,
+            NameOriginal = NameOriginal,
+            Description = Description,
+            Released = Released,
+            Updated = Updated,
+            ToBeAnnounced = ToBeAnnounced,
+            BackgroundImagePath = BackgroundImagePath,
+            BackgroundImageAdditionalPath = BackgroundImageAdditionalPath,
+            Website = Website,
+            Rating = Rating,
+            RatingsCount = RatingsCount,
+            CreatedAt = CreatedAt,
+            UpdatedAt = UpdatedAt
+        };
+    }
 }

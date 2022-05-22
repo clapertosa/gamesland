@@ -17,8 +17,15 @@ public class UserAuthentication : IUserAuthentication
         _configuration = configuration;
     }
 
-    public string Hash(string password) => BCrypt.Net.BCrypt.HashPassword(password);
-    public bool Match(string password, string hashedPassword) => BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+    public string Hash(string password)
+    {
+        return BCrypt.Net.BCrypt.HashPassword(password);
+    }
+
+    public bool Match(string password, string hashedPassword)
+    {
+        return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+    }
 
     public string GetToken(User user)
     {

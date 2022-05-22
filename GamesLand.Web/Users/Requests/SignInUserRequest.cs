@@ -7,5 +7,8 @@ public record SignInUserRequest
     public string Email { get; set; }
     public string Password { get; set; }
 
-    public User ToUser() => new User() { Email = Email, Password = Password };
+    public User ToUser()
+    {
+        return new() { Email = Email, Password = Password };
+    }
 }
