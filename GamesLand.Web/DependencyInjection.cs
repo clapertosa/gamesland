@@ -69,16 +69,14 @@ public static class DependencyInjection
                 .WithIdentity(sendReleasedGamesMessageJobKey));
             q.AddTrigger(config => config
                 .ForJob(sendReleasedGamesMessageJobKey)
-                .WithCronSchedule("0 0 0 * * ?",
-                    x => x.InTimeZone(TimeZoneInfo.FindSystemTimeZoneById("EST")))); // 00 AM GMT
+                .WithCronSchedule("0 0 0 * * ?")); // 00 AM UTC
 
             var deleteNotifiedGamesJobKey = new JobKey("DeleteNotifiedGamesJob");
             q.AddJob<DeleteNotifiedGamesJob>(config => config
                 .WithIdentity(deleteNotifiedGamesJobKey));
             q.AddTrigger(config => config
                 .ForJob(deleteNotifiedGamesJobKey)
-                .WithCronSchedule("0 0 1 * * ?",
-                    x => x.InTimeZone(TimeZoneInfo.FindSystemTimeZoneById("EST")))); // 01 AM GMT
+                .WithCronSchedule("0 0 1 * * ?")); // 01 AM UTC
         });
         services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
