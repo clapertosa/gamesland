@@ -11,7 +11,7 @@ public record AddGameToUserRequest
 
     public Game ToGame()
     {
-        return new()
+        return new Game
         {
             ExternalId = Game.Id,
             Name = Game.Name,
@@ -37,7 +37,7 @@ public record AddGameToUserRequest
 
     public Platform ToPlatform()
     {
-        return new()
+        return new Platform
         {
             ExternalId = Platform.Platform.Id,
             Name = Platform.Platform.Name,

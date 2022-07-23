@@ -38,7 +38,7 @@ public record RawgGame
 
     public Game ToGame()
     {
-        return new()
+        return new Game
         {
             ExternalId = Id,
             Name = Name,

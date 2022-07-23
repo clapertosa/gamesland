@@ -9,6 +9,6 @@ public record SignInUserRequest
 
     public User ToUser()
     {
-        return new() { Email = Email, Password = Password };
+        return new User { Email = Email, Password = Password };
     }
 }

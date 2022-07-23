@@ -10,7 +10,7 @@ internal record PlatformPersistent : BaseEntity<Guid>
 
     public Platform ToPlatform(DateTime? gameReleaseDate = null, string? requirements = null)
     {
-        return new()
+        return new Platform
         {
             Id = Id,
             ExternalId = ExternalId,

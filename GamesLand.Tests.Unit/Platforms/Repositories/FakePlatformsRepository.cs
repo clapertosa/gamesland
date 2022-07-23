@@ -70,7 +70,7 @@ public class FakePlatformsRepository : IPlatformsRepository
 
     private Platform GetPlatform(Platform platform)
     {
-        return new()
+        return new Platform
         {
             Id = platform.Id,
             Name = platform.Name,

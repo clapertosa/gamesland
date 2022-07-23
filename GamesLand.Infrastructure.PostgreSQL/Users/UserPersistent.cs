@@ -13,7 +13,7 @@ internal record UserPersistent : BaseEntity<Guid>
 
     public User ToUser()
     {
-        return new()
+        return new User
         {
             Id = Id,
             FirstName = FirstName,

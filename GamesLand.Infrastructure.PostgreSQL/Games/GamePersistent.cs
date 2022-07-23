@@ -20,7 +20,7 @@ internal record GamePersistent : BaseEntity<Guid>
 
     public Game ToGame()
     {
-        return new()
+        return new Game
         {
             Id = Id,
             ExternalId = ExternalId,

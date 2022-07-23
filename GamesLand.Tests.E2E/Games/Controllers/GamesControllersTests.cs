@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using GamesLand.Core.Users.Entities;
@@ -17,7 +16,7 @@ public class GamesControllersTests : IntegrationTestBase
     [Fact]
     public async Task Search_Games_When_Unauthorized()
     {
-        SearchRequest searchRequest = new SearchRequest() { Name = "Red Dead Redemption 2" };
+        var searchRequest = new SearchRequest { Name = "Red Dead Redemption 2" };
         var res = await Client.GetAsync($"api/games/search?name={searchRequest.Name}");
 
         Assert.Equal(HttpStatusCode.Unauthorized, res.StatusCode);
@@ -26,7 +25,7 @@ public class GamesControllersTests : IntegrationTestBase
     [Fact]
     public async Task Add_Game_To_User()
     {
-        User user = new User()
+        var user = new User
         {
             FirstName = "Claudio",
             LastName = "Test",
@@ -34,9 +33,9 @@ public class GamesControllersTests : IntegrationTestBase
             Password = "password",
             TelegramChatId = 123
         };
-        AddGameToUserRequest addGameToUserRequest = new AddGameToUserRequest()
+        var addGameToUserRequest = new AddGameToUserRequest
         {
-            Game = new RawgGame()
+            Game = new RawgGame
             {
                 Name = "Red Dead Redemption",
                 Id = 2,
@@ -47,19 +46,22 @@ public class GamesControllersTests : IntegrationTestBase
                 RatingsCount = 0,
                 Updated = "2022-05-14",
                 Released = "2022-05-14",
-                Platforms = new []{new RawgPlatformParent()
+                Platforms = new[]
                 {
-                    Platform = new RawgPlatform()
+                    new RawgPlatformParent
                     {
-                        Id = 1,
-                        Name = "PC",
-                        Slug = "pc"
+                        Platform = new RawgPlatform
+                        {
+                            Id = 1,
+                            Name = "PC",
+                            Slug = "pc"
+                        }
                     }
-                }}
+                }
             },
-            Platform = new RawgPlatformParent()
+            Platform = new RawgPlatformParent
             {
-                Platform = new RawgPlatform()
+                Platform = new RawgPlatform
                 {
                     Id = 1,
                     Name = "PC",
@@ -72,14 +74,14 @@ public class GamesControllersTests : IntegrationTestBase
 
         await Client.PostAsJsonAsync("api/users/signup", user);
         var res = await ClientAuthorized.PostAsJsonAsync("api/games/add", addGameToUserRequest);
-        
+
         Assert.Equal(HttpStatusCode.Created, res.StatusCode);
     }
 
     [Fact(Skip = "External API quota")]
     public async Task Search_Games_When_Authorized()
     {
-        SearchRequest searchRequest = new SearchRequest() { Name = "Red Dead Redemption 2" };
+        var searchRequest = new SearchRequest { Name = "Red Dead Redemption 2" };
         var res = await ClientAuthorized.GetAsync($"api/games/search?name={searchRequest.Name}");
 
         Assert.Equal(HttpStatusCode.OK, res.StatusCode);
