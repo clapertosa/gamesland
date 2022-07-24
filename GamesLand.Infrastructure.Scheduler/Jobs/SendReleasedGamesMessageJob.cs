@@ -46,7 +46,7 @@ public class SendReleasedGamesMessageJob : IJob
             await _gamesService.UpdateGameAsync(g.Id, rawgGame.ToGame());
             var externalPlatforms = rawgGame.Platforms?.Select(x => x.Platform);
             var platforms = await Task.WhenAll(externalPlatforms.Select(x =>
-                _platformsService.GetPlatformByExternalIdAsync(x.Id)));
+                _platformsService.GetPlatformByExternalIdAsync(x.Id)).ToList());
             foreach (var platform in platforms)
             {
                 var releaseDateStr = externalPlatforms.FirstOrDefault(x => x.Id == platform.ExternalId)?.ReleasedAt;
