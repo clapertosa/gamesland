@@ -1,4 +1,5 @@
 ﻿using GamesLand.Core.Games.Services;
+using GamesLand.Core.Platforms.Entities;
 using GamesLand.Core.Platforms.Services;
 using GamesLand.Core.UserGames.Services;
 using GamesLand.Infrastructure.RAWG.Services;
@@ -44,15 +45,19 @@ public class SendReleasedGamesMessageJob : IJob
         {
             var rawgGame = await _rawgService.GetGame(g.ExternalId);
             await _gamesService.UpdateGameAsync(g.Id, rawgGame.ToGame());
-            var externalPlatforms = rawgGame.Platforms?.Select(x => x.Platform);
-            var platforms = await Task.WhenAll(externalPlatforms.Select(x =>
-                _platformsService.GetPlatformByExternalIdAsync(x.Id)).ToList());
+            List<Platform?> platforms = new List<Platform?>();
+
+            foreach (var rawgPlatformParent in rawgGame.Platforms)
+            {
+                Platform? p = await _platformsService.GetPlatformByExternalIdAsync(rawgPlatformParent.Platform.Id);
+                if (p == null || rawgPlatformParent.ReleasedAt == null) continue;
+                p.GameReleaseDate = rawgPlatformParent.ReleasedAt;
+                platforms.Add(p);
+            }
+
             foreach (var platform in platforms)
             {
-                var releaseDateStr = externalPlatforms.FirstOrDefault(x => x.Id == platform.ExternalId)?.ReleasedAt;
-                if (releaseDateStr == null || platform?.Id == null) continue;
-                var releaseDate = DateTime.ParseExact(releaseDateStr, "yyyy-MM-dd", null);
-                await _userGameService.UpdateReleaseDateAsync(g.Id, platform.Id, releaseDate);
+                await _userGameService.UpdateReleaseDateAsync(g.Id, platform.Id, platform.GameReleaseDate.Value);
             }
         }
 
