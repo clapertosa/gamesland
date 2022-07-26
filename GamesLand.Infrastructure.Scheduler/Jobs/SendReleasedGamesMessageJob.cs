@@ -57,7 +57,7 @@ public class SendReleasedGamesMessageJob : IJob
 
             foreach (var platform in platforms)
             {
-                await _userGameService.UpdateReleaseDateAsync(g.Id, platform.Id, platform.GameReleaseDate.Value);
+                await _userGameService.UpdateReleaseDateAsync(g.Id, platform.Id, platform.GameReleaseDate);
             }
         }
 

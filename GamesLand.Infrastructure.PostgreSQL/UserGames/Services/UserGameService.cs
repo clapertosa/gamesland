@@ -13,7 +13,7 @@ public class UserGameService : IUserGameService
         _userGameRepository = userGameRepository;
     }
 
-    public Task<UserGame> UpdateReleaseDateAsync(Guid gameId, Guid platformId, DateTime releaseDate)
+    public Task<UserGame?> UpdateReleaseDateAsync(Guid gameId, Guid platformId, DateTime? releaseDate)
     {
         return _userGameRepository.UpdateReleaseDateAsync(gameId, platformId, releaseDate);
     }
